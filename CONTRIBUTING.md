@@ -6,5 +6,6 @@ Rules of contributing to our project.
 4. Description of pull request is required to be written.
 5. Your commits and pull requests must be named and described in English.
 6. Your naming of commits and pull requests must be logical and reasonable. Use conventional commits, please.
-7. Don't merge your pull request before your code has been reviewed.
-8. If you are in doubt what to do, it's better to text developers.
+7. Please use "git commit -s" option.
+8. Don't merge your pull request before your code has been reviewed.
+9. If you are in doubt what to do, it's better to text developers.
