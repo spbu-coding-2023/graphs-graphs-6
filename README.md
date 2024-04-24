@@ -1,4 +1,4 @@
-Graph analysis app
+# Graph analysis app
 This app provides the ability to store graphs and analyze them.
 ## Table of contents
 * [Functionality](#functionality)
