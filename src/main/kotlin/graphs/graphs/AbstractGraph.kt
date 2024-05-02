@@ -4,8 +4,8 @@ import graphs.edges.Edge
 import graphs.vertex.Vertex
 
 abstract class AbstractGraph<V, E : Edge> {
-    protected val vertices: MutableMap<Int, Vertex<V>> = mutableMapOf()
-    protected open val edges: MutableMap<Int, E> = mutableMapOf()
+    internal val vertices: MutableMap<Int, Vertex<V>> = mutableMapOf()
+    internal open val edges: MutableMap<Int, E> = mutableMapOf()
     internal var lastVertexNumber = 0
     internal var lastEdgeNumber = 0
 
