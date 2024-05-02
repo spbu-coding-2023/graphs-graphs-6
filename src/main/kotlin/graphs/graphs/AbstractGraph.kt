@@ -14,6 +14,7 @@ abstract class AbstractGraph<V, E : Edge> {
         vertices[lastVertexNumber++] = Vertex(value)
     }
 
+    // edges are equivalent if their vertices are the same (direction doesn't make effect in general case)
     protected open fun checkEdgesEquivalent(firstEdge: E, secondEdge: E): Boolean =
         (((firstEdge.firstVertexNumber == secondEdge.firstVertexNumber) && (firstEdge.secondVertexNumber == secondEdge.secondVertexNumber)) || ((firstEdge.firstVertexNumber == secondEdge.secondVertexNumber) && (firstEdge.secondVertexNumber == secondEdge.firstVertexNumber)))
 
