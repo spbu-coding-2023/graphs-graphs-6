@@ -96,7 +96,7 @@ abstract class AbstractGraphTests<E : Edge, G : AbstractGraph<Int, E>> {
     }
 
     @Test
-    @DisplayName("change value of nen-existent vertex")
+    @DisplayName("change value of non-existent vertex")
     fun changeValueNonExistentVertex() {
         graph.vertices = mutableMapOf(Pair(0, Vertex(5)), Pair(1, Vertex(6)))
         graph.lastVertexNumber = 2

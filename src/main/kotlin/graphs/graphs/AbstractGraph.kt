@@ -40,7 +40,7 @@ abstract class AbstractGraph<V, E : Edge> {
         if ((!(vertices.containsKey(firstVertexNumber))) || (!(vertices.containsKey(secondVertexNumber)))) return false
         val edge = createEdge(firstVertexNumber, secondVertexNumber)
         for (currEdge in edges.values) {
-            // if edge is already in the graph
+            // if edge is already in the graph, we don't add it
             if (checkEdgesEquivalent(edge, currEdge)) return false
         }
         edges[lastEdgeNumber++] = edge
