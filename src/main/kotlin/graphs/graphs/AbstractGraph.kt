@@ -4,8 +4,8 @@ import graphs.edges.Edge
 import graphs.vertex.Vertex
 
 abstract class AbstractGraph<V, E : Edge> {
-    internal val vertices: MutableMap<Int, Vertex<V>> = mutableMapOf()
-    internal open val edges: MutableMap<Int, E> = mutableMapOf()
+    internal var vertices: MutableMap<Int, Vertex<V>> = mutableMapOf()
+    internal open var edges: MutableMap<Int, E> = mutableMapOf()
     internal var lastVertexNumber = 0
     internal var lastEdgeNumber = 0
 
@@ -14,13 +14,26 @@ abstract class AbstractGraph<V, E : Edge> {
         vertices[lastVertexNumber++] = Vertex(value)
     }
 
+    fun removeVertex(vertexNumber: Int): Vertex<V>? = vertices.remove(vertexNumber)
+
+    fun getVertexValue(vertexNumber: Int): V? = vertices[vertexNumber]?.value
+
+    fun changeVertexValue(vertexNumber: Int, newValue: V): Boolean {
+        if (vertices[vertexNumber] == null) return false
+        vertices[vertexNumber]?.value = newValue
+        return true
+    }
+
     // edges are equivalent if their vertices are the same (direction doesn't make effect in general case)
     protected open fun checkEdgesEquivalent(firstEdge: E, secondEdge: E): Boolean =
-        (((firstEdge.firstVertexNumber == secondEdge.firstVertexNumber) && (firstEdge.secondVertexNumber == secondEdge.secondVertexNumber)) || ((firstEdge.firstVertexNumber == secondEdge.secondVertexNumber) && (firstEdge.secondVertexNumber == secondEdge.firstVertexNumber)))
+        ((firstEdge.verticesNumbers == secondEdge.verticesNumbers) || (firstEdge.verticesNumbers == Pair(
+            secondEdge.verticesNumbers.second,
+            secondEdge.verticesNumbers.first
+        )))
 
     protected abstract fun createEdge(firstVertexNumber: Int, secondVertexNumber: Int): E
 
-    open fun addEdge(firstVertexNumber: Int, secondVertexNumber: Int): Boolean {
+    fun addEdge(firstVertexNumber: Int, secondVertexNumber: Int): Boolean {
         // if edge is a loop, we don't add it
         if (firstVertexNumber == secondVertexNumber) return false
         // if edge's vertex is not in graph, we don't add it
@@ -34,13 +47,9 @@ abstract class AbstractGraph<V, E : Edge> {
         return true
     }
 
-    fun removeVertex(vertexNumber: Int): Vertex<V>? = vertices.remove(vertexNumber)
     fun removeEdge(edgeNumber: Int): E? = edges.remove(edgeNumber)
-    fun getVertexValue(vertexNumber: Int): V? = vertices[vertexNumber]?.value
-    fun getEdgeVertices(edgeNumber: Int): Pair<Int?, Int?> =
-        Pair(edges[edgeNumber]?.firstVertexNumber, edges[edgeNumber]?.secondVertexNumber)
 
-    fun changeVertexValue(vertexNumber: Int, newValue: V) {
-        vertices[vertexNumber]?.value = newValue
-    }
+    fun getEdgeVerticesNumbers(edgeNumber: Int): Pair<Int, Int>? =
+        edges[edgeNumber]?.verticesNumbers
+
 }

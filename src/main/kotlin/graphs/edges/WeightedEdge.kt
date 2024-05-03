@@ -1,5 +1,5 @@
 package graphs.edges
 
-class WeightedEdge(firstVertexNumber: Int, secondVertexNumber: Int) : Edge(firstVertexNumber, secondVertexNumber) {
+class WeightedEdge(verticesNumbers: Pair<Int, Int>) : Edge(verticesNumbers) {
     internal var weight: Int = 0
 }
