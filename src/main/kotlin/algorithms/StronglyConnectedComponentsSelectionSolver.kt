@@ -58,8 +58,8 @@ class StronglyConnectedComponentsSelectionSolver<V>(val graph: DirectedGraph<V>)
             if (visited[vertexNum] == false) dfsOrder(vertexNum)
         }
         initializeVisited() // we need visited[vertexNum] = false again for all vertices
-        for (vertexIndex in 0 until graphMap.keys.size) {
-            val vertexNum = order[graphMap.keys.size - 1 - vertexIndex]
+        for (vertexIndex in 0 until order.size) {
+            val vertexNum = order[order.size - 1 - vertexIndex]
             if (visited[vertexNum] == false) {
                 dfsComponents(vertexNum)
                 ++lastComponentNum
