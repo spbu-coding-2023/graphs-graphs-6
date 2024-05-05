@@ -8,7 +8,7 @@ class StronglyConnectedComponentsSelectionSolver<V>(val graph: DirectedGraph<V>)
     private val reversedGraphMap: MutableMap<Int, MutableSet<Int>> = mutableMapOf()
     private val order: MutableList<Int> = mutableListOf()
     private val components: MutableMap<Int, Int> = mutableMapOf()
-    private var lastComponentNum = 0
+    private var lastComponentNum = 1
 
     private fun initializeGraphs() {
         for (vertexNum in graph.vertices.keys) {
