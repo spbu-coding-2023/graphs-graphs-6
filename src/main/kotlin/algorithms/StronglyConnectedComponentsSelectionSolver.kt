@@ -42,7 +42,7 @@ class StronglyConnectedComponentsSelectionSolver<V>(val graph: DirectedGraph<V>)
 
     private fun dfsComponents(vertexNum: Int) {
         visited[vertexNum] = true
-        components[vertexNum] = lastComponentNum++
+        components[vertexNum] = lastComponentNum
         val nextVertices = reversedGraphMap[vertexNum]
         if (nextVertices != null) {
             for (nextVertexNum in nextVertices) {
@@ -60,7 +60,10 @@ class StronglyConnectedComponentsSelectionSolver<V>(val graph: DirectedGraph<V>)
         initializeVisited() // we need visited[vertexNum] = false again for all vertices
         for (vertexIndex in 0 until graphMap.keys.size) {
             val vertexNum = order[graphMap.keys.size - 1 - vertexIndex]
-            if (visited[vertexNum] == false) dfsComponents(vertexNum)
+            if (visited[vertexNum] == false) {
+                dfsComponents(vertexNum)
+                ++lastComponentNum
+            }
         }
         return components
     }
