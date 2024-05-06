@@ -12,7 +12,8 @@ class PathSearchWithNegativeWeightsSolver<V>(val graph: WeightedDirectedGraph<V>
             parents[vertexNum] = -1
         }
         distances[startVertexNum] = 0
-        var changes = false
+        var changesHappened = false
+        var it = 0
         do {
             for (edge in graph.edges.values) {
                 val distanceFirst = distances[edge.verticesNumbers.first]
@@ -22,12 +23,14 @@ class PathSearchWithNegativeWeightsSolver<V>(val graph: WeightedDirectedGraph<V>
                         if (distanceSecond > distanceFirst + edge.weight) {
                             distances[edge.verticesNumbers.second] = distanceFirst + edge.weight
                             parents[edge.verticesNumbers.second] = edge.verticesNumbers.first
-                            changes = true
+                            changesHappened = true
                         }
                     }
                 }
+                ++it
+                if (it == graph.vertices.size) throw IllegalArgumentException("Negative cycle in the graph! Isn't supported by Ford-Bellman algorithm.")
             }
-        } while (changes)
+        } while (changesHappened)
 
         if (distances[finishVertexNum] == MAX_VALUE) return null
         else {
