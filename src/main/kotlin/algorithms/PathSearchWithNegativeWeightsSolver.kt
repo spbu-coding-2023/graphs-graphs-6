@@ -7,14 +7,15 @@ class PathSearchWithNegativeWeightsSolver<V>(val graph: WeightedDirectedGraph<V>
     fun findPath(startVertexNum: Int, finishVertexNum: Int): List<Int>? {
         val distances: MutableMap<Int, Int> = mutableMapOf()
         val parents: MutableMap<Int, Int> = mutableMapOf()
+        if ((!(graph.vertices.keys.contains(startVertexNum))) || (!(graph.vertices.keys.contains(finishVertexNum)))) return null
         for (vertexNum in graph.vertices.keys) {
             distances[vertexNum] = MAX_VALUE
             parents[vertexNum] = -1
         }
         distances[startVertexNum] = 0
-        var changesHappened = false
         var it = 0
         do {
+            var changesHappened = false
             for (edge in graph.edges.values) {
                 val distanceFirst = distances[edge.verticesNumbers.first]
                 val distanceSecond = distances[edge.verticesNumbers.second]
@@ -27,9 +28,9 @@ class PathSearchWithNegativeWeightsSolver<V>(val graph: WeightedDirectedGraph<V>
                         }
                     }
                 }
-                ++it
-                if (it == graph.vertices.size) throw IllegalArgumentException("Negative cycle in the graph! Isn't supported by Ford-Bellman algorithm.")
             }
+            ++it
+            if (it > graph.vertices.size) throw IllegalArgumentException("Negative cycle in the graph! Isn't supported by Ford-Bellman algorithm.")
         } while (changesHappened)
 
         if (distances[finishVertexNum] == MAX_VALUE) return null
