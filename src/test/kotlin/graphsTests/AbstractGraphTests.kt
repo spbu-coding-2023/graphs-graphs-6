@@ -4,13 +4,12 @@ import graphs.edges.Edge
 import graphs.graphs.AbstractGraph
 import graphs.vertex.Vertex
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-
 
 abstract class AbstractGraphTests<E : Edge, G : AbstractGraph<Int, E>> {
     protected lateinit var graph: G

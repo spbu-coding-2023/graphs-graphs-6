@@ -25,5 +25,4 @@ class WeightedDirectedGraphTests : AbstractWeightedGraphTests<WeightedDirectedGr
         val expectedEdges = mutableMapOf(Pair(0, WeightedEdge(Pair(0, 1))), Pair(1, WeightedEdge(Pair(1, 0))))
         checkGraphEdgesEquals(expectedEdges, graph.edges)
     }
-
 }
