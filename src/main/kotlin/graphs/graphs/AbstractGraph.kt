@@ -26,10 +26,14 @@ abstract class AbstractGraph<V, E : Edge> {
 
     // edges are equivalent if their vertices are the same (direction doesn't make effect in general case)
     protected open fun checkEdgesEquivalent(firstEdge: E, secondEdge: E): Boolean =
-        ((firstEdge.verticesNumbers == secondEdge.verticesNumbers) || (firstEdge.verticesNumbers == Pair(
-            secondEdge.verticesNumbers.second,
-            secondEdge.verticesNumbers.first
-        )))
+        (
+            (firstEdge.verticesNumbers == secondEdge.verticesNumbers) || (
+                firstEdge.verticesNumbers == Pair(
+                    secondEdge.verticesNumbers.second,
+                    secondEdge.verticesNumbers.first
+                )
+                )
+            )
 
     protected abstract fun createEdge(firstVertexNumber: Int, secondVertexNumber: Int): E
 
@@ -51,5 +55,4 @@ abstract class AbstractGraph<V, E : Edge> {
 
     fun getEdgeVerticesNumbers(edgeNumber: Int): Pair<Int, Int>? =
         edges[edgeNumber]?.verticesNumbers
-
 }
