@@ -13,8 +13,6 @@ class KeyVerticesSelectionSolver<V>(val graph: Graph<V>) {
                 if ((edge.verticesNumbers.first == vertexNum) || (edge.verticesNumbers.second == vertexNum)) {
                     if (graphMap.containsKey(vertexNum)) graphMap[vertexNum]?.add(edge.verticesNumbers.second)
                     else graphMap[vertexNum] = mutableSetOf(edge.verticesNumbers.second)
-                    if (graphMap.containsKey(vertexNum)) graphMap[vertexNum]?.add(edge.verticesNumbers.second)
-                    else graphMap[vertexNum] = mutableSetOf(edge.verticesNumbers.second)
                 }
             }
         }
