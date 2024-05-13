@@ -8,13 +8,15 @@ class KeyVerticesSelectionSolver<V>(val graph: Graph<V>) {
     private val stochasticMatrix: MutableMap<Int, MutableMap<Int, Double>> = mutableMapOf()
 
     private fun initializeGraphMap() {
-        for (vertexNum in graph.vertices.keys) {
-            for (edge in graph.edges.values) {
-                if ((edge.verticesNumbers.first == vertexNum) || (edge.verticesNumbers.second == vertexNum)) {
-                    if (graphMap.containsKey(vertexNum)) graphMap[vertexNum]?.add(edge.verticesNumbers.second)
-                    else graphMap[vertexNum] = mutableSetOf(edge.verticesNumbers.second)
-                }
-            }
+        for (edge in graph.edges.values) {
+            val firstVertexNum = edge.verticesNumbers.first
+            val secondVertexNum = edge.verticesNumbers.second
+            if (graphMap.containsKey(firstVertexNum)) graphMap[firstVertexNum]?.add(secondVertexNum)
+            else graphMap[firstVertexNum] = mutableSetOf(secondVertexNum)
+            if (graphMap.containsKey(secondVertexNum)) graphMap[secondVertexNum]?.add(
+                firstVertexNum
+            )
+            else graphMap[secondVertexNum] = mutableSetOf(firstVertexNum)
         }
     }
 
