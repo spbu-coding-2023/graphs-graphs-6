@@ -45,7 +45,7 @@ open class KeyVerticesSelectionSolverSimpleGraphTests {
         graph.vertices = mutableMapOf(
             Pair(1, Vertex(1)),
             Pair(2, Vertex(2)),
-            Pair(3, Vertex(3)),
+            Pair(3, Vertex(3))
         )
         graph.edges = mutableMapOf(
             Pair(1, Edge(Pair(1, 2))),
