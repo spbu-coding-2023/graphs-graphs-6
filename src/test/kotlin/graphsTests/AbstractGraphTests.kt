@@ -211,9 +211,9 @@ abstract class AbstractGraphTests<E : Edge, G : AbstractGraph<Int, E>> {
     open fun transformGraphToMap() {
         graph.vertices = mutableMapOf(Pair(0, Vertex(1)), Pair(1, Vertex(1)), Pair(2, Vertex(2)))
         graph.lastVertexNumber = 3
-        graph.edges = mutableMapOf(Pair(0, createEdge(Pair(0, 1))), Pair(1, createEdge(Pair(1, 2))))
-        graph.lastEdgeNumber = 2
-        val expectedMap = mapOf(Pair(0, setOf(1)), Pair(1, setOf(0, 2)), Pair(2, setOf(1)))
+        graph.edges = mutableMapOf(Pair(0, createEdge(Pair(0, 1))), Pair(1, createEdge(Pair(1, 2))), Pair(2, createEdge(Pair(0, 2))))
+        graph.lastEdgeNumber = 3
+        val expectedMap = mapOf(Pair(0, setOf(1, 2)), Pair(1, setOf(0, 2)), Pair(2, setOf(0, 1)))
         assertEquals(expectedMap, graph.toAdjacencyMap())
     }
 }
