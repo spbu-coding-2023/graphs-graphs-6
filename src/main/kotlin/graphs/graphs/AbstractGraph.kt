@@ -22,6 +22,9 @@ abstract class AbstractGraph<V, E : Edge> {
             )
             else graphMap[secondVertexNum] = mutableSetOf(firstVertexNum)
         }
+        for (vertexNum in vertices.keys) {
+            if (!(graphMap.containsKey(vertexNum))) graphMap[vertexNum] = mutableSetOf()
+        }
         return graphMap.toMap()
     }
 

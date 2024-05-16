@@ -12,6 +12,9 @@ class WeightedDirectedGraph<V> : WeightedGraph<V>() {
             if (graphMap.containsKey(firstVertexNum)) graphMap[firstVertexNum]?.add(secondVertexNum)
             else graphMap[firstVertexNum] = mutableSetOf(secondVertexNum)
         }
+        for (vertexNum in vertices.keys) {
+            if (!(graphMap.containsKey(vertexNum))) graphMap[vertexNum] = mutableSetOf()
+        }
         return graphMap.toMap()
     }
 
