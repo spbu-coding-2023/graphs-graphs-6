@@ -9,6 +9,22 @@ abstract class AbstractGraph<V, E : Edge> {
     internal var lastVertexNumber = 0
     internal var lastEdgeNumber = 0
 
+    open fun toAdjacencyMap(): Map<Int, MutableSet<Int>> {
+        val graphMap: MutableMap<Int, MutableSet<Int>> = mutableMapOf()
+        for (edge in edges.values) {
+            val firstVertexNum = edge.verticesNumbers.first
+            val secondVertexNum = edge.verticesNumbers.second
+            // we add 1-2 and 2-1 both edges in undirected case
+            if (graphMap.containsKey(firstVertexNum)) graphMap[firstVertexNum]?.add(secondVertexNum)
+            else graphMap[firstVertexNum] = mutableSetOf(secondVertexNum)
+            if (graphMap.containsKey(secondVertexNum)) graphMap[secondVertexNum]?.add(
+                firstVertexNum
+            )
+            else graphMap[secondVertexNum] = mutableSetOf(firstVertexNum)
+        }
+        return graphMap.toMap()
+    }
+
     // size of list "vertices" is index of our next vertex, same for edge further
     fun addVertex(value: V) {
         vertices[lastVertexNumber++] = Vertex(value)
