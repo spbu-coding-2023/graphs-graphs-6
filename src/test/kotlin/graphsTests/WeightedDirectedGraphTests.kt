@@ -27,7 +27,6 @@ class WeightedDirectedGraphTests : AbstractWeightedGraphTests<WeightedDirectedGr
         checkGraphEdgesEquals(expectedEdges, graph.edges)
     }
 
-
     @Test
     @DisplayName("transform graph to its adjacency map")
     override fun transformGraphToMap() {
