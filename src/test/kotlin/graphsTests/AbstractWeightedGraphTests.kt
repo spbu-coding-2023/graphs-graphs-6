@@ -36,7 +36,7 @@ abstract class AbstractWeightedGraphTests<G : WeightedGraph<Int>> : AbstractGrap
     fun changeWeightExistentEdge() {
         graph.vertices = mutableMapOf(Pair(0, Vertex(5)), Pair(1, Vertex(6)))
         graph.lastVertexNumber = 2
-        graph.edges = mutableMapOf(Pair(0, WeightedEdge(Pair(0, 1))))
+        graph.edges = mutableMapOf(Pair(0, createEdge(Pair(0, 1))))
         graph.lastEdgeNumber = 1
         graph.edges[0]?.weight = 5
         assertTrue(graph.changeEdgeWeight(0, 10))
@@ -48,7 +48,7 @@ abstract class AbstractWeightedGraphTests<G : WeightedGraph<Int>> : AbstractGrap
     fun changeWeightNonExistentEdge() {
         graph.vertices = mutableMapOf(Pair(0, Vertex(5)), Pair(1, Vertex(6)))
         graph.lastVertexNumber = 2
-        graph.edges = mutableMapOf(Pair(0, WeightedEdge(Pair(0, 1))))
+        graph.edges = mutableMapOf(Pair(0, createEdge(Pair(0, 1))))
         graph.lastEdgeNumber = 1
         assertFalse(graph.changeEdgeWeight(1, 10))
     }
@@ -67,7 +67,7 @@ abstract class AbstractWeightedGraphTests<G : WeightedGraph<Int>> : AbstractGrap
     fun getWeightExistentEdge() {
         graph.vertices = mutableMapOf(Pair(0, Vertex(5)), Pair(1, Vertex(6)))
         graph.lastVertexNumber = 2
-        graph.edges = mutableMapOf(Pair(0, WeightedEdge(Pair(0, 1))))
+        graph.edges = mutableMapOf(Pair(0, createEdge(Pair(0, 1))))
         graph.lastEdgeNumber = 1
         graph.edges[0]?.weight = 5
         assertEquals(5, graph.getEdgeWeight(0))
@@ -79,7 +79,7 @@ abstract class AbstractWeightedGraphTests<G : WeightedGraph<Int>> : AbstractGrap
     fun getWeightNonExistentEdge() {
         graph.vertices = mutableMapOf(Pair(0, Vertex(5)), Pair(1, Vertex(6)))
         graph.lastVertexNumber = 2
-        graph.edges = mutableMapOf(Pair(0, WeightedEdge(Pair(0, 1))))
+        graph.edges = mutableMapOf(Pair(0, createEdge(Pair(0, 1))))
         graph.lastEdgeNumber = 1
         graph.edges[0]?.weight = 5
         assertNull(graph.getEdgeWeight(1))
