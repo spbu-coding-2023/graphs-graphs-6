@@ -24,5 +24,4 @@ class WeightedGraphTests : AbstractWeightedGraphTests<WeightedGraph<Int>>() {
         val expectedEdges = mutableMapOf(Pair(0, createEdge(Pair(0, 1))))
         checkGraphEdgesEquals(expectedEdges, graph.edges)
     }
-
 }

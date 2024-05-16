@@ -1,5 +1,9 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 plugins {
     kotlin("jvm") version "1.9.23"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
+    jacoco
 }
 
 group = "org.example"
@@ -16,6 +20,34 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+tasks.jacocoTestReport {
+    reports {
+        csv.required = true
+        xml.required = false
+        html.required = false
+    }
+}
+
+configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+    debug.set(true)
+    verbose.set(true)
+    android.set(false)
+    outputToConsole.set(true)
+    outputColorName.set("RED")
+    enableExperimentalRules.set(true)
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.CHECKSTYLE)
+    }
+    kotlinScriptAdditionalPaths {
+        include(fileTree("scripts/"))
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
+}
+
 kotlin {
     jvmToolchain(17)
 }

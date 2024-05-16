@@ -4,9 +4,9 @@ import graphs.edges.WeightedEdge
 import graphs.graphs.WeightedGraph
 import graphs.vertex.Vertex
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -71,7 +71,6 @@ abstract class AbstractWeightedGraphTests<G : WeightedGraph<Int>> : AbstractGrap
         graph.lastEdgeNumber = 1
         graph.edges[0]?.weight = 5
         assertEquals(5, graph.getEdgeWeight(0))
-
     }
 
     @Test

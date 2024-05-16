@@ -33,7 +33,6 @@ See our wiki page. (TODO)
 * [Kotlin 1.9.23](https://kotlinlang.org)
 * [Gradle 8.5](https://gradle.org)
 * [JDK 17](https://openjdk.org)
-* [JGraphT 1.5.2](https://jgrapht.org/)
 ## Our team and responsibility areas <a name="team"></a>
 * Vyacheslav Kochergin - .json graph storage, key vertices searching, strongly connected components selection, finding the shortest path with negative weights, documentation. [GitHub](https://github.com/VyacheslavIurevich), [Contact](https://t.me/se4life).
 * Vadim Marchenko - Neo4j graph storage, graph plane layout, searching for bridges, finding the shortest path without negative weights, CI. [GitHub](https://github.com/elbananium), [Contact](https://t.me/elbananum).
@@ -44,3 +43,5 @@ In development.
 See [CONTRIBUTING.md](./CONTRIBUTING.md)
 ## License <a name="license"></a>
 See [LICENSE.md](./LICENSE.md)
+## Acknowledgements
+Huge thanks to [@IliaSuponeff](https://github.com/IliaSuponeff) from [Team 12](https://github.com/spbu-coding-2023/graphs-graphs-12/) for allowing us to use his scripts for CI (distributed under the MIT license).
