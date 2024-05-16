@@ -1,6 +1,6 @@
 package algorithmsTests.keyVerticesSelectionTests
 
-import algorithms.keyVerticesSelection.KeyVerticesSelectionSolverDirectedGraph
+import algorithms.keyVerticesSelection.KeyVerticesSelectionSolver
 import graphs.edges.Edge
 import graphs.graphs.DirectedGraph
 import graphs.vertex.Vertex
@@ -9,11 +9,11 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-class KeyVerticesSelectionSolverDirectedGraphTests : KeyVerticesSelectionSolverSimpleGraphTests() {
+class KeyVerticesSelectionSolverDirectedGraphTests : KeyVerticesSelectionSolverTests() {
     @BeforeEach
     override fun setup() {
         graph = DirectedGraph()
-        solver = KeyVerticesSelectionSolverDirectedGraph(graph as DirectedGraph<Int>)
+        solver = KeyVerticesSelectionSolver(graph)
     }
 
     @Test
