@@ -1,6 +1,6 @@
 package algorithmsTests.keyVerticesSelectionTests
 
-import algorithms.keyVerticesSelection.KeyVerticesSelectionSolverSimpleGraph
+import algorithms.keyVerticesSelection.KeyVerticesSelectionSolver
 import graphs.edges.Edge
 import graphs.graphs.Graph
 import graphs.vertex.Vertex
@@ -9,14 +9,14 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-open class KeyVerticesSelectionSolverSimpleGraphTests {
+open class KeyVerticesSelectionSolverTests {
     protected lateinit var graph: Graph<Int>
-    protected lateinit var solver: KeyVerticesSelectionSolverSimpleGraph<Int>
+    protected lateinit var solver: KeyVerticesSelectionSolver<Int>
 
     @BeforeEach
     open fun setup() {
         graph = Graph()
-        solver = KeyVerticesSelectionSolverSimpleGraph(graph)
+        solver = KeyVerticesSelectionSolver(graph)
     }
 
     @Test

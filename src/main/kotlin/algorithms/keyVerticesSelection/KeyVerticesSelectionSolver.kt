@@ -7,26 +7,13 @@ import kotlin.Double.Companion.MAX_VALUE
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-open class KeyVerticesSelectionSolverSimpleGraph<V>(protected open val graph: Graph<V>) {
-    protected val graphMap: MutableMap<Int, MutableSet<Int>> = mutableMapOf()
+open class KeyVerticesSelectionSolver<V>(protected open val graph: Graph<V>) {
+    private lateinit var graphMap: Map<Int, Set<Int>>
     private var alpha = 0.15
     private val threshold = 0.00001
     private val stochasticMatrix: MutableMap<Int, MutableMap<Int, Double>> = mutableMapOf()
     private val visited: MutableMap<Int, Boolean> = mutableMapOf()
     private val stationaryDistribution: MutableMap<Int, Double> = mutableMapOf()
-
-    protected open fun initializeGraphMap() {
-        for (edge in graph.edges.values) {
-            val firstVertexNum = edge.verticesNumbers.first
-            val secondVertexNum = edge.verticesNumbers.second
-            if (graphMap.containsKey(firstVertexNum)) graphMap[firstVertexNum]?.add(secondVertexNum)
-            else graphMap[firstVertexNum] = mutableSetOf(secondVertexNum)
-            if (graphMap.containsKey(secondVertexNum)) graphMap[secondVertexNum]?.add(
-                firstVertexNum
-            )
-            else graphMap[secondVertexNum] = mutableSetOf(firstVertexNum)
-        }
-    }
 
     private fun dfsStochasticMatrix(vertexNum: Int) {
         if (visited[vertexNum] == true) return
@@ -94,7 +81,7 @@ open class KeyVerticesSelectionSolverSimpleGraph<V>(protected open val graph: Gr
     }
 
     fun selectKeyVertices(): List<Int> {
-        initializeGraphMap()
+        graphMap = graph.toAdjacencyMap()
         initializeStochasticMatrix()
         val stationaryDistribution = findStationaryDistribution()
         val keyVertices: MutableList<Int> = mutableListOf()
