@@ -82,4 +82,27 @@ class BridgeFinderTests {
         val expectedResult = listOf(Pair(3, 4))
         assertContentEquals(result, expectedResult)
     }
+
+    @Test
+    @DisplayName("All edges are bridges")
+    fun allEdgesBridges() {
+        graph.addVertex(0)
+        graph.addVertex(1)
+        graph.addVertex(2)
+        graph.addVertex(3)
+        graph.addVertex(4)
+        graph.addVertex(5)
+        graph.addVertex(6)
+        graph.addVertex(7)
+        graph.addEdge(6, 7)
+        graph.addEdge(5, 6)
+        graph.addEdge(4, 5)
+        graph.addEdge(3, 4)
+        graph.addEdge(2, 3)
+        graph.addEdge(1, 2)
+        graph.addEdge(0, 1)
+        val result = finder.findBridges()
+        val expectedResult = listOf(Pair(6, 7), Pair(5, 6), Pair(4, 5), Pair(3, 4), Pair(2, 3), Pair(1, 2), Pair(0, 1))
+        assertContentEquals(expectedResult, result)
+    }
 }
