@@ -1,4 +1,4 @@
-package algorithms
+package algorithms.stronglyConnectedComponentsSelection
 
 import graphs.graphs.DirectedGraph
 
