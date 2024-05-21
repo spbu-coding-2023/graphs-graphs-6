@@ -13,5 +13,4 @@ open class WeightedGraph<V> : AbstractGraph<V, WeightedEdge>() {
     }
 
     fun getEdgeWeight(edgeNumber: Int): Int? = edges[edgeNumber]?.weight
-
 }

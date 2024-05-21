@@ -43,3 +43,5 @@ In development.
 See [CONTRIBUTING.md](./CONTRIBUTING.md)
 ## License <a name="license"></a>
 See [LICENSE.md](./LICENSE.md)
+## Acknowledgements
+Huge thanks to [@IliaSuponeff](https://github.com/IliaSuponeff) from [Team 12](https://github.com/spbu-coding-2023/graphs-graphs-12/) for allowing us to use his scripts for CI (distributed under the MIT license).
