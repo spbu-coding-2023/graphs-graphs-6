@@ -1,6 +1,6 @@
-package algorithmsTests
+package algorithmsTests.stronglyConnectedComponentsSelectionTests
 
-import algorithms.StronglyConnectedComponentsSelectionSolver
+import algorithms.stronglyConnectedComponentsSelection.StronglyConnectedComponentsSelectionSolver
 import graphs.edges.Edge
 import graphs.graphs.DirectedGraph
 import graphs.vertex.Vertex
