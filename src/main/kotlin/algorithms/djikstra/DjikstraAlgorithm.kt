@@ -24,15 +24,12 @@ open class DjikstraAlgorithm<V>(protected val graph: WeightedGraph<V>) {
             verticlesVisited[i] = false
         }
         verticesDistance[startVertexId] = 0
-        verticlesVisited[startVertexId] = true
-
         for (i in graph.vertices.keys) {
             var nearestId: Int? = null
 
             for (j in graph.vertices.keys) {
-                if (!verticlesVisited.getOrDefault(j, false) && verticesDistance[j]!! < verticesDistance[i]!!) {
+                if (!verticlesVisited.getOrDefault(j, false) && (verticesDistance[j]!! < verticesDistance[i]!! || nearestId == null)) {
                     nearestId = j
-                    break
                 }
             }
             if (nearestId == null || verticesDistance[nearestId] == Int.MAX_VALUE) break
