@@ -1,6 +1,6 @@
-package algorithms.bridgeFinder
+package model.algorithms.bridgeFinder
 
-import graphs.graphs.Graph
+import model.graphs.graphs.Graph
 import java.util.Stack
 import kotlin.math.min
 

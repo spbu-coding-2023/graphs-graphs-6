@@ -1,7 +1,7 @@
 package algorithmsTests
 
-import algorithms.bridgeFinder.BridgeFinder
-import graphs.graphs.Graph
+import model.algorithms.bridgeFinder.BridgeFinder
+import model.graphs.graphs.Graph
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
