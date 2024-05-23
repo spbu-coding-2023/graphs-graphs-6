@@ -1,6 +1,6 @@
-package algorithms
+package model.algorithms.stronglyConnectedComponentsSelection
 
-import graphs.graphs.DirectedGraph
+import model.graphs.graphs.DirectedGraph
 
 class StronglyConnectedComponentsSelectionSolver<V>(val graph: DirectedGraph<V>) {
     private val visited: MutableMap<Int, Boolean> = mutableMapOf()
@@ -11,17 +11,15 @@ class StronglyConnectedComponentsSelectionSolver<V>(val graph: DirectedGraph<V>)
     private var lastComponentNum = 1
 
     private fun initializeGraphs() {
-        for (vertexNum in graph.vertices.keys) {
-            for (edge in graph.edges.values) {
-                if (edge.verticesNumbers.first == vertexNum) {
-                    if (graphMap.containsKey(vertexNum)) graphMap[vertexNum]?.add(edge.verticesNumbers.second)
-                    else graphMap[vertexNum] = mutableSetOf(edge.verticesNumbers.second)
-                    if (reversedGraphMap.containsKey(edge.verticesNumbers.second)) reversedGraphMap[edge.verticesNumbers.second]?.add(
-                        vertexNum
-                    )
-                    else reversedGraphMap[edge.verticesNumbers.second] = mutableSetOf(vertexNum)
-                }
-            }
+        for (edge in graph.edges.values) {
+            val firstVertexNum = edge.verticesNumbers.first
+            val secondVertexNum = edge.verticesNumbers.second
+            if (graphMap.containsKey(firstVertexNum)) graphMap[firstVertexNum]?.add(secondVertexNum)
+            else graphMap[firstVertexNum] = mutableSetOf(secondVertexNum)
+            if (reversedGraphMap.containsKey(secondVertexNum)) reversedGraphMap[secondVertexNum]?.add(
+                firstVertexNum
+            )
+            else reversedGraphMap[secondVertexNum] = mutableSetOf(firstVertexNum)
         }
     }
 
