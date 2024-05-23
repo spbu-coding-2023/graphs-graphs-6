@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-class PathSearchWithNegativeWeightsSolverTests {
+class FordBellmanTests {
     private lateinit var graph: WeightedDirectedGraph<Int>
     private lateinit var solver: FordBellmanAlgorithm<Int>
 
