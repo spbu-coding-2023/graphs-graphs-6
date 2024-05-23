@@ -1,8 +1,8 @@
 package graphsTests
 
-import graphs.edges.Edge
-import graphs.graphs.AbstractGraph
-import graphs.vertex.Vertex
+import model.graphs.edges.Edge
+import model.graphs.graphs.AbstractGraph
+import model.graphs.vertex.Vertex
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull

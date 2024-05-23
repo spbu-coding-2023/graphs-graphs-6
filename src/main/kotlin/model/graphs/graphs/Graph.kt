@@ -1,6 +1,6 @@
-package graphs.graphs
+package model.graphs.graphs
 
-import graphs.edges.Edge
+import model.graphs.edges.Edge
 
 open class Graph<V> : AbstractGraph<V, Edge>() {
     override fun createEdge(firstVertexNumber: Int, secondVertexNumber: Int): Edge =

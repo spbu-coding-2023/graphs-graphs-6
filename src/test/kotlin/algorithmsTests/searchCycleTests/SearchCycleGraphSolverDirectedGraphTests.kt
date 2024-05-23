@@ -1,9 +1,9 @@
 package algorithmsTests.searchCycleTests
 
-import algorithms.searchCycle.SearchCycleDirectedGraphSolver
-import graphs.edges.Edge
-import graphs.graphs.DirectedGraph
-import graphs.vertex.Vertex
+import model.algorithms.searchCycle.SearchCycleDirectedGraphSolver
+import model.graphs.edges.Edge
+import model.graphs.graphs.DirectedGraph
+import model.graphs.vertex.Vertex
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.DisplayName

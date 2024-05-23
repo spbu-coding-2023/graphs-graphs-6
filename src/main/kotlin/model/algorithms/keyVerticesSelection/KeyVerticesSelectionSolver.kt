@@ -1,6 +1,6 @@
-package algorithms.keyVerticesSelection
+package model.algorithms.keyVerticesSelection
 
-import graphs.graphs.Graph
+import model.graphs.graphs.Graph
 import java.util.Collections.max
 import java.util.SortedMap
 import kotlin.Double.Companion.MAX_VALUE
