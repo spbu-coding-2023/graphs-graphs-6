@@ -2,16 +2,22 @@ package algorithms.searchCycle
 
 import graphs.graphs.Graph
 
-class SearchCycleSolver<V>(val graph: Graph<V>) { // non-negative numbers of vertices
+open class SearchCycleGraphSolver<V>(val graph: Graph<V>) { // non-negative numbers of vertices
+    protected enum class Color {
+        White,
+        Gray,
+        Black
+    }
+
     private val verticesAdjacencyList = graph.toAdjacencyMap()
     private val cycleVertices = mutableListOf<Int>()
-    private val isVertexUsed = mutableMapOf<Int, Boolean>()
+    private val vertexColor = mutableMapOf<Int, Color>()
 
     fun searchCycle(): Boolean { // only first cycle found
         initializeUsageList()
 
         for (vertex in verticesAdjacencyList.keys) {
-            if (isVertexUsed[vertex] != true) {
+            if (vertexColor[vertex] != Color.Black) {
                 dfs(vertex)
 
                 if (cycleVertices.size != 0) {
@@ -26,7 +32,7 @@ class SearchCycleSolver<V>(val graph: Graph<V>) { // non-negative numbers of ver
     fun getCycle(): List<Int> {
         val answer = cycleVertices
 
-        if (cycleVertices.size != 0) {
+        if (cycleVertices.size > 0) {
             answer.reverse()
         }
 
@@ -35,30 +41,48 @@ class SearchCycleSolver<V>(val graph: Graph<V>) { // non-negative numbers of ver
 
     private fun initializeUsageList() {
         for (vertex in verticesAdjacencyList.keys) {
-            isVertexUsed[vertex] = false
+            vertexColor[vertex] = Color.White
         }
     }
 
+    protected open fun parentsCheck(currVertex: Int, parentVertex: Int): Boolean {
+        return currVertex == parentVertex
+    }
+
     private fun dfs(currVertex: Int, prevVertex: Int = -1): Int {
-        if (isVertexUsed[currVertex] == true) {
+        if (vertexColor[currVertex] == Color.Gray) { // cycle of two in directed graphs
             cycleVertices.add(currVertex)
-            return currVertex // beginning of cycle
+            return currVertex
         }
+        vertexColor[currVertex] = Color.Gray
 
-        isVertexUsed[currVertex] = true
         val tempAdjacencyList = verticesAdjacencyList[currVertex] ?: return -1 // adjacency list is never empty
-
         for (tempVertex in tempAdjacencyList) {
-            if (tempVertex != prevVertex) {
+            if (parentsCheck(tempVertex, prevVertex)) {
+                continue
+            }
+
+            if (vertexColor[tempVertex] == Color.White) {
                 val result = dfs(tempVertex, currVertex)
 
                 if (result != -1) {
                     cycleVertices.add(currVertex)
-                    return if (result == currVertex) -1 else result // it's important for directed graphs
+
+                    vertexColor[currVertex] = Color.Black
+                    return if (result == currVertex) -1 else result
                 }
+            }
+
+            if (vertexColor[tempVertex] == Color.Gray) {
+                cycleVertices.add(tempVertex)
+                cycleVertices.add(currVertex)
+
+                vertexColor[currVertex] = Color.Black
+                return tempVertex
             }
         }
 
+        vertexColor[currVertex] = Color.Black
         return -1
     }
 }
