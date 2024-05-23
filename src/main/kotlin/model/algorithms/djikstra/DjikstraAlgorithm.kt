@@ -1,7 +1,7 @@
-package algorithms.djikstra
+package model.algorithms.djikstra
 
-import graphs.graphs.WeightedGraph
-import graphs.vertex.Vertex
+import model.graphs.graphs.WeightedGraph
+import model.graphs.vertex.Vertex
 
 open class DjikstraAlgorithm<V>(protected val graph: WeightedGraph<V>) {
     fun findNearestPath(startVertex: Vertex<V>, endVertex: Vertex<V>): DjikstraPathResult<V> {

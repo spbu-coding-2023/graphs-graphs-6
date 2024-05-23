@@ -1,13 +1,13 @@
 package algorithmsTests
 
-import algorithms.djikstra.DjikstraAlgorithm
-import algorithms.djikstra.DjikstraPathResult
-import graphs.graphs.WeightedGraph
-import graphs.vertex.Vertex
+import model.algorithms.djikstra.DjikstraAlgorithm
+import model.algorithms.djikstra.DjikstraPathResult
+import model.graphs.graphs.WeightedGraph
+import model.graphs.vertex.Vertex
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 class DjikstraTests {
 
@@ -16,11 +16,11 @@ class DjikstraTests {
 
     @BeforeEach
     fun setup() {
-        graph = WeightedGraph<Int>()
+        graph = WeightedGraph()
         solver = DjikstraAlgorithm(graph)
     }
 
-    fun createExpectedPathResult(vararg ids: Int): DjikstraPathResult<Int> {
+    private fun createExpectedPathResult(vararg ids: Int): DjikstraPathResult<Int> {
         val list = mutableListOf<Vertex<Int>>()
 
         for (i in ids) {
@@ -30,7 +30,7 @@ class DjikstraTests {
 
         return DjikstraPathResult(graph, list)
     }
-    fun assertEqualsDjikstraPathResult(expected: DjikstraPathResult<Int>, result: DjikstraPathResult<Int>) {
+    private fun assertEqualsDjikstraPathResult(expected: DjikstraPathResult<Int>, result: DjikstraPathResult<Int>) {
         assertEquals(expected.graph, result.graph)
         assertEquals(expected.vertexList.size, result.vertexList.size)
         for (i in 0..<expected.vertexList.size) {
@@ -38,7 +38,7 @@ class DjikstraTests {
         }
     }
 
-    fun prepareGraphSchema_First() {
+    private fun prepareGraphSchema_First() {
         graph.addVertex(0)
         graph.addVertex(1)
         graph.addVertex(2)
