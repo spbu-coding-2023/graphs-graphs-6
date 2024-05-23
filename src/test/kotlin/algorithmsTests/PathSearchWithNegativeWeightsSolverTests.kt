@@ -1,9 +1,9 @@
 package algorithmsTests
 
-import algorithms.PathSearchWithNegativeWeightsSolver
-import graphs.edges.WeightedEdge
-import graphs.graphs.WeightedDirectedGraph
-import graphs.vertex.Vertex
+import model.algorithms.pathSearch.fordBellman.FordBellmanAlgorithm
+import model.graphs.edges.WeightedEdge
+import model.graphs.graphs.WeightedDirectedGraph
+import model.graphs.vertex.Vertex
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -13,12 +13,12 @@ import org.junit.jupiter.api.Test
 
 class PathSearchWithNegativeWeightsSolverTests {
     private lateinit var graph: WeightedDirectedGraph<Int>
-    private lateinit var solver: PathSearchWithNegativeWeightsSolver<Int>
+    private lateinit var solver: FordBellmanAlgorithm<Int>
 
     @BeforeEach
     fun setup() {
         graph = WeightedDirectedGraph()
-        solver = PathSearchWithNegativeWeightsSolver(graph)
+        solver = FordBellmanAlgorithm(graph)
     }
 
     @Test
@@ -27,8 +27,8 @@ class PathSearchWithNegativeWeightsSolverTests {
         graph.vertices = mutableMapOf(Pair(1, Vertex(1)), Pair(2, Vertex(2)))
         graph.edges = mutableMapOf(Pair(1, WeightedEdge(Pair(1, 2))))
         graph.edges[1]?.weight = 5
-        val expectedPath = listOf(1, 2)
-        assertEquals(expectedPath, solver.findPath(1, 2))
+        val expectedPath = listOf(Vertex(1), Vertex(2))
+        assertEquals(expectedPath, solver.findPath(1, 2)?.vertexList)
     }
 
     @Test
@@ -43,8 +43,8 @@ class PathSearchWithNegativeWeightsSolverTests {
         graph.edges[1]?.weight = 5
         graph.edges[2]?.weight = -10000
         graph.edges[3]?.weight = 1
-        val expectedPath = listOf(1, 2, 3)
-        assertEquals(expectedPath, solver.findPath(1, 3))
+        val expectedPath = listOf(Vertex(1), Vertex(2), Vertex(3))
+        assertEquals(expectedPath, solver.findPath(1, 3)?.vertexList)
     }
 
     @Test
@@ -90,8 +90,8 @@ class PathSearchWithNegativeWeightsSolverTests {
         graph.edges[1]?.weight = 5
         graph.edges[2]?.weight = 10
         graph.edges[3]?.weight = 20
-        val expectedPath = listOf(1, 2, 3)
-        assertEquals(expectedPath, solver.findPath(1, 3))
+        val expectedPath = listOf(Vertex(1), Vertex(2), Vertex(3))
+        assertEquals(expectedPath, solver.findPath(1, 3)?.vertexList)
     }
 
     @Test

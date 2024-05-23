@@ -1,7 +1,7 @@
 package algorithmsTests
 
-import model.algorithms.djikstra.DjikstraAlgorithm
-import model.algorithms.djikstra.DjikstraPathResult
+import model.algorithms.pathSearch.PathResult
+import model.algorithms.pathSearch.djikstra.DjikstraAlgorithm
 import model.graphs.graphs.WeightedGraph
 import model.graphs.vertex.Vertex
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -20,7 +20,7 @@ class DjikstraTests {
         solver = DjikstraAlgorithm(graph)
     }
 
-    private fun createExpectedPathResult(vararg ids: Int): DjikstraPathResult<Int> {
+    private fun createExpectedPathResult(vararg ids: Int): PathResult<Int> {
         val list = mutableListOf<Vertex<Int>>()
 
         for (i in ids) {
@@ -28,9 +28,9 @@ class DjikstraTests {
             list.add(graph.vertices[i]!!)
         }
 
-        return DjikstraPathResult(graph, list)
+        return PathResult(graph, list)
     }
-    private fun assertEqualsDjikstraPathResult(expected: DjikstraPathResult<Int>, result: DjikstraPathResult<Int>) {
+    private fun assertEqualsDjikstraPathResult(expected: PathResult<Int>, result: PathResult<Int>) {
         assertEquals(expected.graph, result.graph)
         assertEquals(expected.vertexList.size, result.vertexList.size)
         for (i in 0..<expected.vertexList.size) {

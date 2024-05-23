@@ -1,10 +1,11 @@
-package model.algorithms.djikstra
+package model.algorithms.pathSearch.djikstra
 
+import model.algorithms.pathSearch.PathResult
 import model.graphs.graphs.WeightedGraph
 import model.graphs.vertex.Vertex
 
 open class DjikstraAlgorithm<V>(protected val graph: WeightedGraph<V>) {
-    fun findNearestPath(startVertex: Vertex<V>, endVertex: Vertex<V>): DjikstraPathResult<V> {
+    fun findNearestPath(startVertex: Vertex<V>, endVertex: Vertex<V>): PathResult<V> {
         if (!graph.vertices.containsValue(startVertex) || !graph.vertices.containsValue(endVertex)) throw IllegalArgumentException()
 
         val startVertexId = graph.vertices.keys.first { x -> graph.vertices[x] == startVertex }
@@ -12,7 +13,7 @@ open class DjikstraAlgorithm<V>(protected val graph: WeightedGraph<V>) {
 
         return findNearestPath(startVertexId, endVertexId)
     }
-    fun findNearestPath(startVertexId: Int, endVertexId: Int): DjikstraPathResult<V> {
+    fun findNearestPath(startVertexId: Int, endVertexId: Int): PathResult<V> {
         if (graph.vertices.isEmpty() || !graph.vertices.containsKey(startVertexId) || !graph.vertices.containsKey(endVertexId)) throw IllegalArgumentException()
 
         val verticesDistance = mutableMapOf<Int, Int>()
@@ -58,6 +59,6 @@ open class DjikstraAlgorithm<V>(protected val graph: WeightedGraph<V>) {
         }
         resultPath.add(graph.vertices[startVertexId]!!)
         resultPath.reverse()
-        return DjikstraPathResult(graph, resultPath)
+        return PathResult(graph, resultPath)
     }
 }
