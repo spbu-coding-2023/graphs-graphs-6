@@ -1,6 +1,6 @@
-package algorithms.stronglyConnectedComponentsSelection
+package model.algorithms.stronglyConnectedComponentsSelection
 
-import graphs.graphs.DirectedGraph
+import model.graphs.graphs.DirectedGraph
 
 class StronglyConnectedComponentsSelectionSolver<V>(val graph: DirectedGraph<V>) {
     private val visited: MutableMap<Int, Boolean> = mutableMapOf()

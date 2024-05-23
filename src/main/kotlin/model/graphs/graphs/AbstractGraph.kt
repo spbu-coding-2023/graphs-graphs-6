@@ -1,7 +1,7 @@
-package graphs.graphs
+package model.graphs.graphs
 
-import graphs.edges.Edge
-import graphs.vertex.Vertex
+import model.graphs.edges.Edge
+import model.graphs.vertex.Vertex
 
 abstract class AbstractGraph<V, E : Edge> {
     internal var vertices: MutableMap<Int, Vertex<V>> = mutableMapOf()

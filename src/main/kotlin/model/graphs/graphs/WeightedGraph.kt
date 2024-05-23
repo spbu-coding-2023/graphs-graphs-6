@@ -1,6 +1,6 @@
-package graphs.graphs
+package model.graphs.graphs
 
-import graphs.edges.WeightedEdge
+import model.graphs.edges.WeightedEdge
 
 open class WeightedGraph<V> : AbstractGraph<V, WeightedEdge>() {
     override fun createEdge(firstVertexNumber: Int, secondVertexNumber: Int): WeightedEdge =
