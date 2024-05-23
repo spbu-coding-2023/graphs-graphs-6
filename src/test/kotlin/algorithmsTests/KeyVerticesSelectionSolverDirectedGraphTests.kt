@@ -1,4 +1,4 @@
-package algorithmsTests.keyVerticesSelectionTests
+package algorithmsTests
 
 import model.algorithms.keyVerticesSelection.KeyVerticesSelectionSolver
 import model.graphs.edges.Edge

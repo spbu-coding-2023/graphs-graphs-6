@@ -1,4 +1,4 @@
-package algorithmsTests.searchCycleTests
+package algorithmsTests
 
 import model.algorithms.searchCycle.SearchCycleGraphSolver
 import model.graphs.edges.Edge
