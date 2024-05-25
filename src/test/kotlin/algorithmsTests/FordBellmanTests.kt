@@ -5,7 +5,6 @@ import model.graphs.edges.WeightedEdge
 import model.graphs.graphs.WeightedDirectedGraph
 import model.graphs.vertex.Vertex
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -28,7 +27,7 @@ class FordBellmanTests {
         graph.edges = mutableMapOf(Pair(1, WeightedEdge(Pair(1, 2))))
         graph.edges[1]?.weight = 5
         val expectedPath = listOf(Vertex(1), Vertex(2))
-        assertEquals(expectedPath, solver.findPath(1, 2)?.vertexList)
+        assertEquals(expectedPath, solver.findPath(1, 2).vertexList)
     }
 
     @Test
@@ -44,7 +43,7 @@ class FordBellmanTests {
         graph.edges[2]?.weight = -10000
         graph.edges[3]?.weight = 1
         val expectedPath = listOf(Vertex(1), Vertex(2), Vertex(3))
-        assertEquals(expectedPath, solver.findPath(1, 3)?.vertexList)
+        assertEquals(expectedPath, solver.findPath(1, 3).vertexList)
     }
 
     @Test
@@ -53,7 +52,9 @@ class FordBellmanTests {
         graph.vertices = mutableMapOf(Pair(1, Vertex(1)), Pair(2, Vertex(2)))
         graph.edges = mutableMapOf(Pair(1, WeightedEdge(Pair(1, 2))))
         graph.edges[1]?.weight = 5
-        assertNull(solver.findPath(3, 4))
+        assertThrows(IllegalArgumentException::class.java) {
+            solver.findPath(3, 4)
+        }
     }
 
     @Test
@@ -62,7 +63,9 @@ class FordBellmanTests {
         graph.vertices = mutableMapOf(Pair(1, Vertex(1)), Pair(2, Vertex(2)))
         graph.edges = mutableMapOf(Pair(1, WeightedEdge(Pair(1, 2))))
         graph.edges[1]?.weight = 5
-        assertNull(solver.findPath(2, 4))
+        assertThrows(IllegalArgumentException::class.java) {
+            solver.findPath(2, 4)
+        }
     }
 
     @Test
@@ -75,7 +78,9 @@ class FordBellmanTests {
         )
         graph.edges[1]?.weight = 5
         graph.edges[2]?.weight = 10
-        assertNull(solver.findPath(1, 3))
+        assertThrows(IllegalArgumentException::class.java) {
+            solver.findPath(1, 3)
+        }
     }
 
     @Test
@@ -91,7 +96,7 @@ class FordBellmanTests {
         graph.edges[2]?.weight = 10
         graph.edges[3]?.weight = 20
         val expectedPath = listOf(Vertex(1), Vertex(2), Vertex(3))
-        assertEquals(expectedPath, solver.findPath(1, 3)?.vertexList)
+        assertEquals(expectedPath, solver.findPath(1, 3).vertexList)
     }
 
     @Test
