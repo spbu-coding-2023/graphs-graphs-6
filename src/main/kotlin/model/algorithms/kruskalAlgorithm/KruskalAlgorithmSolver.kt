@@ -3,43 +3,58 @@ package model.algorithms.kruskalAlgorithm
 import model.graphs.edges.WeightedEdge
 import model.graphs.graphs.WeightedGraph
 
-class KruskalAlgorithmSolver<V>(graph: WeightedGraph<V>) { // non-directed weighted graphs
+class KruskalAlgorithmSolver<V>(graph: WeightedGraph<V>) { // non-directed weighted connected graphs
+    private var edges = graph.edges.values
     private val numOfVertices = graph.lastVertexNumber
-    private val sortedEdges = sortEdges(graph)
 
-    private val disjointSet = IntArray(numOfVertices) { -1 }
-    private val mst = mutableListOf<WeightedEdge>()
+    private val disjointSet: MutableList<Int> = mutableListOf()
+    private val minimalSpanningTree = mutableListOf<WeightedEdge>()
 
-    fun doKruskalAlgorithm(): List<WeightedEdge> {
+    fun doKruskalAlgorithm(): Pair<Boolean, List<WeightedEdge>> {
+        if (numOfVertices <= 1) { // empty graph or graph with one vertex
+            return Pair(false, minimalSpanningTree.toList())
+        }
+
+        initializeDisjointSet()
+        val sortedEdges = edges.sortedBy { it.weight }
+
         for (edge in sortedEdges) {
-            if (mst.size >= numOfVertices - 1) {
+            if (minimalSpanningTree.size == numOfVertices - 1) {
                 break
             }
 
-            if (find(disjointSet, edge.verticesNumbers.first) != find(disjointSet, edge.verticesNumbers.second)) {
-                union(disjointSet, edge.verticesNumbers.first, edge.verticesNumbers.second)
-                mst.add(edge)
+            if (findMST(disjointSet, edge.verticesNumbers.first - 1) !=
+                findMST(disjointSet, edge.verticesNumbers.second - 1)
+            ) {
+                unionMST(disjointSet, edge.verticesNumbers.first - 1, edge.verticesNumbers.second - 1)
+                minimalSpanningTree.add(edge)
             }
         }
 
-        return mst
+        if (minimalSpanningTree.size < numOfVertices - 1) {
+            return Pair(false, emptyList())
+        }
+
+        return Pair(true, minimalSpanningTree.toList())
     }
 
-    private fun sortEdges(graph: WeightedGraph<V>): List<WeightedEdge> {
-        return graph.edges.values.sortedBy { it.weight }
+    private fun initializeDisjointSet() {
+        for (i in 0..<numOfVertices) {
+            disjointSet.add(-1)
+        }
     }
 
-    private fun find(parents: IntArray, i: Int): Int {
+    private fun findMST(parents: MutableList<Int>, i: Int): Int {
         if (parents[i] < 0) {
             return i
         }
 
-        return find(parents, parents[i]).also { parents[i] = it }
+        return findMST(parents, parents[i]).also { parents[i] = it }
     }
 
-    private fun union(parents: IntArray, i: Int, j: Int) {
-        val root1 = find(parents, i)
-        val root2 = find(parents, j)
+    private fun unionMST(parents: MutableList<Int>, i: Int, j: Int) {
+        val root1 = findMST(parents, i)
+        val root2 = findMST(parents, j)
 
         if (root1 != root2) {
             if (parents[root1] < parents[root2]) {
