@@ -84,6 +84,13 @@ fun app() {
                     addEdge(0, 4)
                     addEdge(0, 5)
                     addEdge(0, 6)
+
+                    changeEdgeWeight(0, 1)
+                    changeEdgeWeight(1, -2)
+                    changeEdgeWeight(2, 3)
+                    changeEdgeWeight(3, -4)
+                    changeEdgeWeight(4, 5)
+                    changeEdgeWeight(5, -6)
                 }
                 mainScreenWeightedGraph(MainScreenViewModelWeightedGraph(sampleGraph, CircularPlacementStrategy()))
             } else {
@@ -102,6 +109,13 @@ fun app() {
                     addEdge(0, 4)
                     addEdge(0, 5)
                     addEdge(0, 6)
+
+                    changeEdgeWeight(0, 1)
+                    changeEdgeWeight(1, -2)
+                    changeEdgeWeight(2, 3)
+                    changeEdgeWeight(3, -4)
+                    changeEdgeWeight(4, 5)
+                    changeEdgeWeight(5, -6)
                 }
                 mainScreenWeightedGraph(MainScreenViewModelWeightedGraph(sampleGraph, CircularPlacementStrategy()))
             }
