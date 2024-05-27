@@ -13,11 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import view.graphView.graphsView.directedGraphView
 import view.graphView.graphsView.graphView
 import viewModel.screensViewModels.mainScreensViewModels.MainScreenViewModel
 
 @Composable
-fun <V> mainScreen(viewModel: MainScreenViewModel<V>) {
+fun <V> mainScreen(viewModel: MainScreenViewModel<V>, isDirected: Boolean) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(20.dp)
     ) {
@@ -55,7 +56,8 @@ fun <V> mainScreen(viewModel: MainScreenViewModel<V>) {
         Surface(
             modifier = Modifier.weight(1f)
         ) {
-            graphView(viewModel.graphViewModel)
+            if (isDirected) directedGraphView(viewModel.graphViewModel)
+            else graphView(viewModel.graphViewModel)
         }
     }
 }

@@ -4,13 +4,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import view.graphView.edgesView.edgeView
+import view.graphView.edgesView.directedEdgeView
 import view.graphView.vertexView
-import viewModel.graphViewModel.graphsViewModel.WeightedGraphViewModel
+import viewModel.graphViewModel.graphsViewModel.GraphViewModel
 
 @Composable
-fun <V> weightedGraphView(
-    viewModel: WeightedGraphViewModel<V>
+fun <V> directedGraphView(
+    viewModel: GraphViewModel<V>
 ) {
     Box(
         modifier = Modifier
@@ -21,7 +21,7 @@ fun <V> weightedGraphView(
             vertexView(v, Modifier)
         }
         viewModel.edges.forEach { e ->
-            edgeView(e, Modifier)
+            directedEdgeView(e, Modifier)
         }
     }
 }

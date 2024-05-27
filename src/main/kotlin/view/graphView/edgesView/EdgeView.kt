@@ -1,4 +1,4 @@
-package view.graphView
+package view.graphView.edgesView
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
