@@ -1,10 +1,12 @@
-package view.graphView
+package view.graphView.graphsView
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import viewModel.graphViewModel.GraphViewModel
+import view.graphView.edgeView
+import view.graphView.vertexView
+import viewModel.graphViewModel.graphsViewModel.GraphViewModel
 
 @Composable
 fun <V> graphView(

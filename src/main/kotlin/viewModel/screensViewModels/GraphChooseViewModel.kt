@@ -1,4 +1,4 @@
-package viewModel
+package viewModel.screensViewModels
 
 class GraphChooseViewModel<V> {
     internal var isDirected = false

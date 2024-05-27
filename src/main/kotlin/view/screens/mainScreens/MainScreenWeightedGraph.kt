@@ -1,4 +1,4 @@
-package view
+package view.screens.mainScreens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,11 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import view.graphView.graphView
-import viewModel.MainScreenViewModel
+import view.graphView.graphsView.weightedGraphView
+import viewModel.screensViewModels.mainScreensViewModels.MainScreenViewModelWeightedGraph
 
 @Composable
-fun <V> mainScreen(viewModel: MainScreenViewModel<V>) {
+fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(20.dp)
     ) {
@@ -55,7 +55,7 @@ fun <V> mainScreen(viewModel: MainScreenViewModel<V>) {
         Surface(
             modifier = Modifier.weight(1f)
         ) {
-            graphView(viewModel.graphViewModel)
+            weightedGraphView(viewModel.graphViewModel)
         }
     }
 }

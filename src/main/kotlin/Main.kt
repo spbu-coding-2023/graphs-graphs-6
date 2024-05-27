@@ -6,31 +6,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import model.graphs.graphs.DirectedGraph
 import model.graphs.graphs.Graph
-import view.graphChooseScreen
-import view.mainScreen
-import viewModel.GraphChooseViewModel
-import viewModel.MainScreenViewModel
+import model.graphs.graphs.WeightedDirectedGraph
+import model.graphs.graphs.WeightedGraph
+import view.screens.graphChooseScreen
+import view.screens.mainScreens.mainScreen
+import view.screens.mainScreens.mainScreenWeightedGraph
 import viewModel.graphViewModel.CircularPlacementStrategy
-
-val sampleGraph = Graph<String>().apply {
-    addVertex("A")
-    addVertex("B")
-    addVertex("C")
-    addVertex("D")
-    addVertex("E")
-    addVertex("F")
-    addVertex("G")
-
-    addEdge(0, 1)
-    addEdge(0, 2)
-    addEdge(0, 3)
-    addEdge(0, 4)
-    addEdge(0, 5)
-    addEdge(0, 6)
-}
+import viewModel.screensViewModels.GraphChooseViewModel
+import viewModel.screensViewModels.mainScreensViewModels.MainScreenViewModel
+import viewModel.screensViewModels.mainScreensViewModels.MainScreenViewModelWeightedGraph
 
 var closeFirstWindow: MutableState<Boolean> = mutableStateOf(false)
+val graphChooseVM = GraphChooseViewModel<String>()
 
 @Composable
 @Preview
@@ -38,13 +27,84 @@ fun app() {
     MaterialTheme {
         closeFirstWindow = remember { mutableStateOf(false) }
         if (!closeFirstWindow.value) {
-            graphChooseScreen(GraphChooseViewModel<String>()) {
+            graphChooseScreen(graphChooseVM) {
                 closeFirstWindow.value = true
             }
         }
-
         if (closeFirstWindow.value) {
-            mainScreen(MainScreenViewModel(sampleGraph, CircularPlacementStrategy()))
+            if (!graphChooseVM.isDirected && !graphChooseVM.isWeighted) {
+                val sampleGraph = Graph<String>().apply {
+                    addVertex("A")
+                    addVertex("B")
+                    addVertex("C")
+                    addVertex("D")
+                    addVertex("E")
+                    addVertex("F")
+                    addVertex("G")
+
+                    addEdge(0, 1)
+                    addEdge(0, 2)
+                    addEdge(0, 3)
+                    addEdge(0, 4)
+                    addEdge(0, 5)
+                    addEdge(0, 6)
+                }
+                mainScreen(MainScreenViewModel(sampleGraph, CircularPlacementStrategy()))
+            } else if (graphChooseVM.isDirected && !graphChooseVM.isWeighted) {
+                val sampleGraph = DirectedGraph<String>().apply {
+                    addVertex("A")
+                    addVertex("B")
+                    addVertex("C")
+                    addVertex("D")
+                    addVertex("E")
+                    addVertex("F")
+                    addVertex("G")
+
+                    addEdge(0, 1)
+                    addEdge(0, 2)
+                    addEdge(0, 3)
+                    addEdge(0, 4)
+                    addEdge(0, 5)
+                    addEdge(0, 6)
+                }
+                mainScreen(MainScreenViewModel(sampleGraph, CircularPlacementStrategy()))
+            } else if (!graphChooseVM.isDirected) {
+                val sampleGraph = WeightedGraph<String>().apply {
+                    addVertex("A")
+                    addVertex("B")
+                    addVertex("C")
+                    addVertex("D")
+                    addVertex("E")
+                    addVertex("F")
+                    addVertex("G")
+
+                    addEdge(0, 1)
+                    addEdge(0, 2)
+                    addEdge(0, 3)
+                    addEdge(0, 4)
+                    addEdge(0, 5)
+                    addEdge(0, 6)
+                }
+                mainScreenWeightedGraph(MainScreenViewModelWeightedGraph(sampleGraph, CircularPlacementStrategy()))
+            } else {
+                val sampleGraph = WeightedDirectedGraph<String>().apply {
+                    addVertex("A")
+                    addVertex("B")
+                    addVertex("C")
+                    addVertex("D")
+                    addVertex("E")
+                    addVertex("F")
+                    addVertex("G")
+
+                    addEdge(0, 1)
+                    addEdge(0, 2)
+                    addEdge(0, 3)
+                    addEdge(0, 4)
+                    addEdge(0, 5)
+                    addEdge(0, 6)
+                }
+                mainScreenWeightedGraph(MainScreenViewModelWeightedGraph(sampleGraph, CircularPlacementStrategy()))
+            }
         }
     }
 }

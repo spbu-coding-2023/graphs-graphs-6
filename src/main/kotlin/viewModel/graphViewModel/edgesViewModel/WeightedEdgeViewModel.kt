@@ -9,7 +9,7 @@ class WeightedEdgeViewModel<V>(
     v: VertexViewModel<V>,
     private val e: WeightedEdge,
     private val _labelVisible: State<Boolean>
-) : EdgeViewModel<V>(u, v, e) {
+) : EdgeViewModel<V>(u, v) {
     override val label
         get() = e.weight.toString()
     override val labelVisible

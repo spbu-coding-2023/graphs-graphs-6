@@ -1,4 +1,4 @@
-package view
+package view.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -6,7 +6,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import viewModel.GraphChooseViewModel
+import viewModel.screensViewModels.GraphChooseViewModel
 
 @Composable
 fun <V> graphChooseScreen(viewModel: GraphChooseViewModel<V>, onDismiss: () -> Unit) {
