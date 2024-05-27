@@ -3,6 +3,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     kotlin("jvm") version "1.9.23"
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
+    kotlin("plugin.serialization") version "2.0.0"
     jacoco
 }
 
@@ -15,6 +16,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }
 
 tasks.test {
