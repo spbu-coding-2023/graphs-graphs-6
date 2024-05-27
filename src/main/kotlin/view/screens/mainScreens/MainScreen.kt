@@ -29,26 +29,12 @@ fun <V> mainScreen(viewModel: MainScreenViewModel<V>, isDirected: Boolean) {
                 })
                 Text("Show vertices labels", fontSize = 28.sp, modifier = Modifier.padding(4.dp))
             }
-            Row {
-                Checkbox(checked = viewModel.showEdgesLabels.value, onCheckedChange = {
-                    viewModel.showEdgesLabels.value = it
-                })
-                Text("Show edges labels", fontSize = 28.sp, modifier = Modifier.padding(4.dp))
-            }
             Button(
                 onClick = viewModel::resetGraphView,
                 enabled = true
             ) {
                 Text(
                     text = "Reset default settings"
-                )
-            }
-            Button(
-                onClick = viewModel::setVerticesColor,
-                enabled = true
-            ) {
-                Text(
-                    text = "Set colors"
                 )
             }
         }

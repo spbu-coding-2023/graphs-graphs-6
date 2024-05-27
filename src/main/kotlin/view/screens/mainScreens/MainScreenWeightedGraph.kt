@@ -43,14 +43,6 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
                     text = "Reset default settings"
                 )
             }
-            Button(
-                onClick = viewModel::setVerticesColor,
-                enabled = true
-            ) {
-                Text(
-                    text = "Set colors"
-                )
-            }
         }
 
         Surface(
