@@ -23,10 +23,10 @@ class KruskalAlgorithmSolver<V>(graph: WeightedGraph<V>) { // non-directed weigh
                 break
             }
 
-            if (findMST(disjointSet, edge.verticesNumbers.first - 1) !=
-                findMST(disjointSet, edge.verticesNumbers.second - 1)
+            if (findMST(disjointSet, edge.verticesNumbers.first) !=
+                findMST(disjointSet, edge.verticesNumbers.second)
             ) {
-                unionMST(disjointSet, edge.verticesNumbers.first - 1, edge.verticesNumbers.second - 1)
+                unionMST(disjointSet, edge.verticesNumbers.first, edge.verticesNumbers.second)
                 minimalSpanningTree.add(edge)
             }
         }
