@@ -1,3 +1,4 @@
+
 package view.screens.mainScreens
 
 import androidx.compose.foundation.layout.Arrangement
@@ -78,7 +79,7 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
                     "Select strongly connected components" -> viewModel.selectStronglyConnectedComponents()
                     "Find bridges" -> viewModel.findBridges()
                     "Find cycles for a vertex" -> {}
-                    "Build a minimal spanning tree" -> {}
+                    "Build a minimal spanning tree" -> viewModel.buildMST()
                     "Find shortest path (Dijkstra)" -> {
                         isFordBellman = false
                         dialogOpen = true

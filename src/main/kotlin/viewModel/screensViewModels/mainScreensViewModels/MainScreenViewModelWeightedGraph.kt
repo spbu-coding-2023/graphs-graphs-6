@@ -3,6 +3,7 @@ package viewModel.screensViewModels.mainScreensViewModels
 import androidx.compose.ui.graphics.Color
 import model.algorithms.bridgeFinder.BridgeFinder
 import model.algorithms.keyVerticesSelection.KeyVerticesSelectionSolver
+import model.algorithms.kruskalAlgorithm.KruskalAlgorithmSolver
 import model.algorithms.pathSearch.djikstra.DjikstraAlgorithm
 import model.algorithms.pathSearch.fordBellman.FordBellmanAlgorithm
 import model.algorithms.stronglyConnectedComponentsSelection.StronglyConnectedComponentsSelectionSolver
@@ -144,5 +145,20 @@ class MainScreenViewModelWeightedGraph<V>(val graph: WeightedGraph<V>, represent
             }
         }
         representationStrategy.highlightEdges(toHighlightEdges, Color.Red)
+    }
+
+    fun buildMST() {
+        val solver = KruskalAlgorithmSolver(graph)
+        val mst = solver.doKruskalAlgorithm()
+        val toHighlightNotIncludedEdges: MutableList<EdgeViewModel<V>> = mutableListOf()
+        val toHighlightIncludedEdges: MutableList<EdgeViewModel<V>> = mutableListOf()
+        for (edge in graph.edges.values) {
+            val edgeViewModel =
+                graphViewModel.edgesMap[edge] ?: throw IllegalArgumentException("No ViewModel for such edge")
+            if (edge in mst.second) toHighlightIncludedEdges.add(edgeViewModel)
+            else toHighlightNotIncludedEdges.add(edgeViewModel)
+        }
+        representationStrategy.highlightEdges(toHighlightIncludedEdges, Color.Red)
+        representationStrategy.highlightEdges(toHighlightNotIncludedEdges, Color.White)
     }
 }
