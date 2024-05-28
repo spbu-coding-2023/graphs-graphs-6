@@ -76,7 +76,7 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
                     "Select key vertices" -> viewModel.selectKeyVertices()
                     "Select communities" -> {}
                     "Select strongly connected components" -> viewModel.selectStronglyConnectedComponents()
-                    "Find bridges" -> {}
+                    "Find bridges" -> viewModel.findBridges()
                     "Find cycles for a vertex" -> {}
                     "Build a minimal spanning tree" -> {}
                     "Find shortest path (Dijkstra)" -> {

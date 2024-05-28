@@ -1,6 +1,7 @@
 package viewModel.screensViewModels.mainScreensViewModels
 
 import androidx.compose.ui.graphics.Color
+import model.algorithms.bridgeFinder.BridgeFinder
 import model.algorithms.keyVerticesSelection.KeyVerticesSelectionSolver
 import model.algorithms.stronglyConnectedComponentsSelection.StronglyConnectedComponentsSelectionSolver
 import model.graphs.edges.Edge
@@ -8,6 +9,7 @@ import model.graphs.graphs.DirectedGraph
 import model.graphs.graphs.Graph
 import viewModel.graphViewModel.RepresentationStrategy
 import viewModel.graphViewModel.VertexViewModel
+import viewModel.graphViewModel.edgesViewModel.EdgeViewModel
 import viewModel.graphViewModel.graphsViewModel.GraphViewModel
 import kotlin.random.Random
 
@@ -29,7 +31,8 @@ class MainScreenViewModel<V>(val graph: Graph<V>, representationStrategy: Repres
         val verticesList: MutableList<VertexViewModel<V>> = mutableListOf()
         for (vertexNum in verticesToHighlight) {
             val vertex = graph.vertices[vertexNum] ?: throw IllegalArgumentException("No such vertex in a graph model")
-            val vertexViewModel = graphViewModel.verticesMap[vertex] ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
+            val vertexViewModel = graphViewModel.verticesMap[vertex]
+                ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
             verticesList.add(vertexViewModel)
         }
         representationStrategy.highlightVertices(verticesList, Color.Green)
@@ -50,7 +53,8 @@ class MainScreenViewModel<V>(val graph: Graph<V>, representationStrategy: Repres
         for (componentNum in componentsMap.values) {
             if (componentNum !in componentsColors.keys) {
                 var randomTriple = Triple(0, 0, 0)
-                while (randomTriple in usedTriples) randomTriple = Triple(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
+                while (randomTriple in usedTriples) randomTriple =
+                    Triple(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
                 usedTriples.add(randomTriple)
                 val color = Color(randomTriple.first, randomTriple.second, randomTriple.third, 255)
                 componentsColors[componentNum] = color
@@ -58,10 +62,29 @@ class MainScreenViewModel<V>(val graph: Graph<V>, representationStrategy: Repres
         }
         for (vertexNum in componentsMap.keys) {
             val vertex = graph.vertices[vertexNum] ?: throw IllegalArgumentException("No such vertex in a graph model")
-            val vertexViewModel = graphViewModel.verticesMap[vertex] ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
-            val componentNum = componentsMap[vertexNum] ?: throw IllegalArgumentException("No component found for this vertex")
-            val color = componentsColors[componentNum] ?: throw IllegalArgumentException("No color found for this component")
+            val vertexViewModel = graphViewModel.verticesMap[vertex]
+                ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
+            val componentNum =
+                componentsMap[vertexNum] ?: throw IllegalArgumentException("No component found for this vertex")
+            val color =
+                componentsColors[componentNum] ?: throw IllegalArgumentException("No color found for this component")
             representationStrategy.highlightVertices(listOf(vertexViewModel), color)
         }
+    }
+
+    fun findBridges() {
+        val solver = BridgeFinder(graph)
+        val bridges = solver.findBridges()
+        val toHighlightEdges: MutableList<EdgeViewModel<V>> = mutableListOf()
+        for (bridge in bridges) {
+            for (edge in graph.edges.values) {
+                if ((bridge == edge.verticesNumbers) || (Pair(bridge.second, bridge.first) == edge.verticesNumbers)) {
+                    val edgeViewModel =
+                        graphViewModel.edgesMap[edge] ?: throw IllegalArgumentException("No ViewModel for such edge")
+                    toHighlightEdges.add(edgeViewModel)
+                }
+            }
+        }
+        representationStrategy.highlightEdges(toHighlightEdges, Color.Red)
     }
 }

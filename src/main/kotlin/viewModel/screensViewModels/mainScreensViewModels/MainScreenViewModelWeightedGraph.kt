@@ -1,6 +1,7 @@
 package viewModel.screensViewModels.mainScreensViewModels
 
 import androidx.compose.ui.graphics.Color
+import model.algorithms.bridgeFinder.BridgeFinder
 import model.algorithms.keyVerticesSelection.KeyVerticesSelectionSolver
 import model.algorithms.pathSearch.djikstra.DjikstraAlgorithm
 import model.algorithms.pathSearch.fordBellman.FordBellmanAlgorithm
@@ -120,6 +121,28 @@ class MainScreenViewModelWeightedGraph<V>(val graph: WeightedGraph<V>, represent
             previousVertex = vertex
         }
         representationStrategy.highlightVertices(toHighlightVertices, Color.Green)
+        representationStrategy.highlightEdges(toHighlightEdges, Color.Red)
+    }
+
+    fun findBridges() {
+        val sameGraphNoWeights = Graph<V>()
+        for (vertex in graph.vertices.values) sameGraphNoWeights.addVertex(vertex.value)
+        for (edge in graph.edges.values) sameGraphNoWeights.addEdge(
+            edge.verticesNumbers.first,
+            edge.verticesNumbers.second
+        )
+        val solver = BridgeFinder(sameGraphNoWeights)
+        val bridges = solver.findBridges()
+        val toHighlightEdges: MutableList<EdgeViewModel<V>> = mutableListOf()
+        for (bridge in bridges) {
+            for (edge in graph.edges.values) {
+                if ((bridge == edge.verticesNumbers) || (Pair(bridge.second, bridge.first) == edge.verticesNumbers)) {
+                    val edgeViewModel =
+                        graphViewModel.edgesMap[edge] ?: throw IllegalArgumentException("No ViewModel for such edge")
+                    toHighlightEdges.add(edgeViewModel)
+                }
+            }
+        }
         representationStrategy.highlightEdges(toHighlightEdges, Color.Red)
     }
 }
