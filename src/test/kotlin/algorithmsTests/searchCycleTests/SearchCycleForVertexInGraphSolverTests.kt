@@ -1,6 +1,6 @@
 package algorithmsTests.searchCycleTests
 
-import algorithms.searchCycle.SearchCycleGraphSolver
+import algorithms.searchCycle.SearchCycleForVertexInGraphSolver
 import graphs.edges.Edge
 import graphs.graphs.Graph
 import graphs.vertex.Vertex
@@ -10,17 +10,17 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-open class SearchCycleGraphSolverTests {
+open class SearchCycleForVertexInGraphSolverTests {
     private var graph: Graph<Int> = Graph()
-    protected lateinit var solver: SearchCycleGraphSolver<Int>
+    protected lateinit var solver: SearchCycleForVertexInGraphSolver<Int>
 
     @Test
     @DisplayName("empty graph with no cycle")
     fun emptyGraph() {
-        solver = SearchCycleGraphSolver(graph)
+        solver = SearchCycleForVertexInGraphSolver(graph)
 
         val expected = false
-        val actual = solver.searchCycle()
+        val actual = solver.searchCycleForVertex(1)
         assertEquals(expected, actual)
 
         val expectedCycle = emptyList<Int>()
@@ -31,11 +31,15 @@ open class SearchCycleGraphSolverTests {
     @Test
     @DisplayName("isolated vertices with no cycle")
     fun isolatedVertices() {
-        graph.vertices = mutableMapOf(Pair(1, Vertex(1)), Pair(2, Vertex(2)), Pair(3, Vertex(3)))
-        solver = SearchCycleGraphSolver(graph)
+        graph.vertices = mutableMapOf(
+            Pair(0, Vertex(1)),
+            Pair(1, Vertex(2)),
+            Pair(2, Vertex(3))
+        )
+        solver = SearchCycleForVertexInGraphSolver(graph)
 
         val expected = false
-        val actual = solver.searchCycle()
+        val actual = solver.searchCycleForVertex(0)
         assertEquals(expected, actual)
 
         val expectedCycle = emptyList<Int>()
@@ -46,12 +50,19 @@ open class SearchCycleGraphSolverTests {
     @Test
     @DisplayName("no cycle")
     fun noCycle() {
-        graph.vertices = mutableMapOf(Pair(1, Vertex(1)), Pair(2, Vertex(2)), Pair(3, Vertex(3)))
-        graph.edges = mutableMapOf(Pair(1, Edge(Pair(1, 2))), Pair(2, Edge(Pair(2, 3))))
-        solver = SearchCycleGraphSolver(graph)
+        graph.vertices = mutableMapOf(
+            Pair(0, Vertex(1)),
+            Pair(1, Vertex(2)),
+            Pair(2, Vertex(3))
+        )
+        graph.edges = mutableMapOf(
+            Pair(0, Edge(Pair(0, 1))),
+            Pair(1, Edge(Pair(1, 2)))
+        )
+        solver = SearchCycleForVertexInGraphSolver(graph)
 
         val expected = false
-        val actual = solver.searchCycle()
+        val actual = solver.searchCycleForVertex(0)
         assertEquals(expected, actual)
 
         assertTrue(solver.getCycle().isEmpty())
@@ -60,15 +71,23 @@ open class SearchCycleGraphSolverTests {
     @Test
     @DisplayName("one cycle")
     open fun oneCycle() {
-        graph.vertices = mutableMapOf(Pair(1, Vertex(1)), Pair(2, Vertex(2)), Pair(3, Vertex(3)))
-        graph.edges = mutableMapOf(Pair(1, Edge(Pair(1, 2))), Pair(2, Edge(Pair(2, 3))), Pair(3, Edge(Pair(1, 3))))
-        solver = SearchCycleGraphSolver(graph)
+        graph.vertices = mutableMapOf(
+            Pair(0, Vertex(1)),
+            Pair(1, Vertex(2)),
+            Pair(2, Vertex(3))
+        )
+        graph.edges = mutableMapOf(
+            Pair(0, Edge(Pair(0, 1))),
+            Pair(1, Edge(Pair(1, 2))),
+            Pair(2, Edge(Pair(0, 2)))
+        )
+        solver = SearchCycleForVertexInGraphSolver(graph)
 
         val expected = true
-        val actual = solver.searchCycle()
+        val actual = solver.searchCycleForVertex(0)
         assertEquals(expected, actual)
 
-        val expectedCycle = listOf(1, 2, 3, 1)
+        val expectedCycle = listOf(0, 1, 2, 0)
         val actualCycle = solver.getCycle()
         assertEquals(expectedCycle, actualCycle)
     }
@@ -77,28 +96,28 @@ open class SearchCycleGraphSolverTests {
     @DisplayName("two cycles, answer is the first one")
     open fun twoCycles() {
         graph.vertices = mutableMapOf(
-            Pair(1, Vertex(1)),
-            Pair(2, Vertex(2)),
-            Pair(3, Vertex(3)),
-            Pair(4, Vertex(4)),
-            Pair(5, Vertex(5))
+            Pair(0, Vertex(1)),
+            Pair(1, Vertex(2)),
+            Pair(2, Vertex(3)),
+            Pair(3, Vertex(4)),
+            Pair(4, Vertex(5))
         )
         graph.edges = mutableMapOf(
+            Pair(0, Edge(Pair(0, 1))),
             Pair(1, Edge(Pair(1, 2))),
-            Pair(2, Edge(Pair(2, 3))),
-            Pair(3, Edge(Pair(1, 3))),
-            Pair(4, Edge(Pair(1, 4))),
-            Pair(5, Edge(Pair(5, 4))),
-            Pair(6, Edge(Pair(5, 1)))
+            Pair(2, Edge(Pair(0, 2))),
+            Pair(3, Edge(Pair(0, 3))),
+            Pair(4, Edge(Pair(4, 3))),
+            Pair(5, Edge(Pair(4, 0)))
         )
-        solver = SearchCycleGraphSolver(graph)
+        solver = SearchCycleForVertexInGraphSolver(graph)
 
         val expected = true
-        val actual = solver.searchCycle()
+        val actual = solver.searchCycleForVertex(0)
         assertEquals(expected, actual)
 
-        val firstCycle = listOf(1, 2, 3, 1)
-        val secondCycle = listOf(1, 4, 5, 1)
+        val firstCycle = listOf(0, 1, 2, 0)
+        val secondCycle = listOf(0, 3, 4, 0)
         val actualCycle = solver.getCycle()
         assertNotEquals(secondCycle, actualCycle)
         assertEquals(firstCycle, actualCycle)
@@ -108,25 +127,25 @@ open class SearchCycleGraphSolverTests {
     @DisplayName("two connected components, cycle in the second one")
     fun twoComponents() {
         graph.vertices = mutableMapOf(
-            Pair(1, Vertex(1)),
-            Pair(2, Vertex(2)),
-            Pair(3, Vertex(3)),
-            Pair(4, Vertex(4)),
-            Pair(5, Vertex(5))
+            Pair(0, Vertex(1)),
+            Pair(1, Vertex(2)),
+            Pair(2, Vertex(3)),
+            Pair(3, Vertex(4)),
+            Pair(4, Vertex(5))
         )
         graph.edges = mutableMapOf(
-            Pair(1, Edge(Pair(1, 2))),
+            Pair(0, Edge(Pair(0, 1))),
+            Pair(1, Edge(Pair(3, 2))),
             Pair(2, Edge(Pair(4, 3))),
-            Pair(3, Edge(Pair(5, 4))),
-            Pair(4, Edge(Pair(3, 5)))
+            Pair(3, Edge(Pair(2, 4)))
         )
-        solver = SearchCycleGraphSolver(graph)
+        solver = SearchCycleForVertexInGraphSolver(graph)
 
         val expected = true
-        val actual = solver.searchCycle()
+        val actual = solver.searchCycleForVertex(0)
         assertEquals(expected, actual)
 
-        val expectedCycle = listOf(4, 3, 5, 4)
+        val expectedCycle = listOf(3, 2, 4, 3)
         val actualCycle = solver.getCycle()
         assertEquals(expectedCycle, actualCycle)
     }
@@ -135,17 +154,17 @@ open class SearchCycleGraphSolverTests {
     @DisplayName("cycleOfTwoVertices")
     open fun cycleOfTwo() {
         graph.vertices = mutableMapOf(
-            Pair(1, Vertex(1)),
-            Pair(2, Vertex(2))
+            Pair(0, Vertex(1)),
+            Pair(1, Vertex(2))
         )
         graph.edges = mutableMapOf(
-            Pair(1, Edge(Pair(1, 2))),
-            Pair(2, Edge(Pair(2, 1)))
+            Pair(0, Edge(Pair(0, 1))),
+            Pair(1, Edge(Pair(1, 0)))
         )
-        solver = SearchCycleGraphSolver(graph)
+        solver = SearchCycleForVertexInGraphSolver(graph)
 
         val expected = false
-        val actual = solver.searchCycle()
+        val actual = solver.searchCycleForVertex(0)
         assertEquals(expected, actual)
 
         val expectedCycle = emptyList<Int>()

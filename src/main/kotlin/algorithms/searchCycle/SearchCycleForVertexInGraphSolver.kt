@@ -2,7 +2,7 @@ package algorithms.searchCycle
 
 import graphs.graphs.Graph
 
-open class SearchCycleGraphSolver<V>(val graph: Graph<V>) { // non-negative numbers of vertices
+open class SearchCycleForVertexInGraphSolver<V>(val graph: Graph<V>) { // non-negative numbers of vertices
     protected enum class Color {
         White,
         Gray,
@@ -13,12 +13,21 @@ open class SearchCycleGraphSolver<V>(val graph: Graph<V>) { // non-negative numb
     private val cycleVertices = mutableListOf<Int>()
     private val vertexColor = mutableMapOf<Int, Color>()
 
-    fun searchCycle(): Boolean { // only first cycle found
+    fun searchCycleForVertex(vertex: Int): Boolean { // only first cycle found
         initializeUsageList()
 
-        for (vertex in verticesAdjacencyList.keys) {
-            if (vertexColor[vertex] != Color.Black) {
-                dfs(vertex)
+        /*
+        val result =
+         */
+        dfs(vertex)
+        // return result != -1
+        if (cycleVertices.size != 0) {
+            return true
+        }
+
+        for (tempVertex in verticesAdjacencyList.keys) {
+            if (vertexColor[tempVertex] != Color.Black) {
+                dfs(tempVertex)
 
                 if (cycleVertices.size != 0) {
                     return true
@@ -36,7 +45,7 @@ open class SearchCycleGraphSolver<V>(val graph: Graph<V>) { // non-negative numb
             answer.reverse()
         }
 
-        return answer.toList() // correct answer (reverse), first vertex included twice
+        return answer.toList() // correct answer (reverse), first vertex included twice; if algorithm's result is false, empty list returned
     }
 
     private fun initializeUsageList() {
