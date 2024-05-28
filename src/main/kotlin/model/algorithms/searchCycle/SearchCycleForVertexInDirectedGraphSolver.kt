@@ -1,6 +1,6 @@
-package algorithms.searchCycle
+package model.algorithms.searchCycle
 
-import graphs.graphs.DirectedGraph
+import model.graphs.graphs.DirectedGraph
 
 class SearchCycleForVertexInDirectedGraphSolver<V>(graph: DirectedGraph<V>) :
     SearchCycleForVertexInGraphSolver<V>(graph) {

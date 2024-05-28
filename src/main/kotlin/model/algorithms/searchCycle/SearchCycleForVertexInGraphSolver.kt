@@ -1,6 +1,6 @@
-package algorithms.searchCycle
+package model.algorithms.searchCycle
 
-import graphs.graphs.Graph
+import model.graphs.graphs.Graph
 
 open class SearchCycleForVertexInGraphSolver<V>(val graph: Graph<V>) { // non-negative numbers of vertices
     protected enum class Color {
