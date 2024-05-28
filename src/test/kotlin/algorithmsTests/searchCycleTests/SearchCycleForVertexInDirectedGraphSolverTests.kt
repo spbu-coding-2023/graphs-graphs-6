@@ -5,7 +5,9 @@ import graphs.edges.Edge
 import graphs.graphs.DirectedGraph
 import graphs.vertex.Vertex
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -59,6 +61,9 @@ class SearchCycleForVertexInDirectedGraphSolverTests : SearchCycleForVertexInGra
         val expectedCycle = listOf(0, 1, 2, 0)
         val actualCycle = solver.getCycle()
         assertEquals(expectedCycle, actualCycle)
+
+        assertTrue(solver.searchCycleForVertex(1))
+        assertTrue(solver.searchCycleForVertex(2))
     }
 
     @Test
@@ -94,7 +99,7 @@ class SearchCycleForVertexInDirectedGraphSolverTests : SearchCycleForVertexInGra
     }
 
     @Test
-    @DisplayName("two cycles in directed case, answer is the first one")
+    @DisplayName("two cycles in directed case, vertex is in the first one")
     fun twoCyclesDirected() {
         graph.vertices = mutableMapOf(
             Pair(0, Vertex(1)),
@@ -125,7 +130,7 @@ class SearchCycleForVertexInDirectedGraphSolverTests : SearchCycleForVertexInGra
     }
 
     @Test
-    @DisplayName("previous sample, single answer is the second one")
+    @DisplayName("previous sample, single answer is in the second one")
     fun twoCyclesDirectedAnother() {
         graph.vertices = mutableMapOf(
             Pair(0, Vertex(1)),
@@ -153,6 +158,10 @@ class SearchCycleForVertexInDirectedGraphSolverTests : SearchCycleForVertexInGra
         val actualCycle = solver.getCycle()
         assertNotEquals(firstCycle, actualCycle)
         assertEquals(secondCycle, actualCycle)
+
+        assertFalse(solver.searchCycleForVertex(1))
+        assertTrue(solver.searchCycleForVertex(3))
+        assertTrue(solver.searchCycleForVertex(4))
     }
 
     @Test
@@ -175,5 +184,7 @@ class SearchCycleForVertexInDirectedGraphSolverTests : SearchCycleForVertexInGra
         val expectedCycle = listOf(0, 1, 0)
         val actualCycle = solver.getCycle()
         assertEquals(expectedCycle, actualCycle)
+
+        assertTrue(solver.searchCycleForVertex(1))
     }
 }

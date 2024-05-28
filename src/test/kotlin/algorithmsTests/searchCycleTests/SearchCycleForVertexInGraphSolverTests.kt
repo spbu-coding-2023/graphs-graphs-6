@@ -20,7 +20,7 @@ open class SearchCycleForVertexInGraphSolverTests {
         solver = SearchCycleForVertexInGraphSolver(graph)
 
         val expected = false
-        val actual = solver.searchCycleForVertex(1)
+        val actual = solver.searchCycleForVertex(0)
         assertEquals(expected, actual)
 
         val expectedCycle = emptyList<Int>()
@@ -90,10 +90,13 @@ open class SearchCycleForVertexInGraphSolverTests {
         val expectedCycle = listOf(0, 1, 2, 0)
         val actualCycle = solver.getCycle()
         assertEquals(expectedCycle, actualCycle)
+
+        assertTrue(solver.searchCycleForVertex(1))
+        assertTrue(solver.searchCycleForVertex(2))
     }
 
     @Test
-    @DisplayName("two cycles, answer is the first one")
+    @DisplayName("two cycles, vertex is in the first one")
     open fun twoCycles() {
         graph.vertices = mutableMapOf(
             Pair(0, Vertex(1)),
@@ -124,7 +127,7 @@ open class SearchCycleForVertexInGraphSolverTests {
     }
 
     @Test
-    @DisplayName("two connected components, cycle in the second one")
+    @DisplayName("two connected components, vertex is not in the second one")
     fun twoComponents() {
         graph.vertices = mutableMapOf(
             Pair(0, Vertex(1)),
@@ -141,13 +144,14 @@ open class SearchCycleForVertexInGraphSolverTests {
         )
         solver = SearchCycleForVertexInGraphSolver(graph)
 
-        val expected = true
+        val expected = false
         val actual = solver.searchCycleForVertex(0)
         assertEquals(expected, actual)
 
         val expectedCycle = listOf(3, 2, 4, 3)
         val actualCycle = solver.getCycle()
-        assertEquals(expectedCycle, actualCycle)
+        assertNotEquals(expectedCycle, actualCycle)
+        assertEquals(emptyList<Int>(), actualCycle)
     }
 
     @Test

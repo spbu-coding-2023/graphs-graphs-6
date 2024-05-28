@@ -14,28 +14,14 @@ open class SearchCycleForVertexInGraphSolver<V>(val graph: Graph<V>) { // non-ne
     private val vertexColor = mutableMapOf<Int, Color>()
 
     fun searchCycleForVertex(vertex: Int): Boolean { // only first cycle found
+        if (verticesAdjacencyList.isEmpty()) {
+            return false
+        }
+
         initializeUsageList()
 
-        /*
-        val result =
-         */
-        dfs(vertex)
-        // return result != -1
-        if (cycleVertices.size != 0) {
-            return true
-        }
-
-        for (tempVertex in verticesAdjacencyList.keys) {
-            if (vertexColor[tempVertex] != Color.Black) {
-                dfs(tempVertex)
-
-                if (cycleVertices.size != 0) {
-                    return true
-                }
-            }
-        }
-
-        return cycleVertices.size != 0
+        val result = dfs(vertex)
+        return result == -2
     }
 
     fun getCycle(): List<Int> {
@@ -74,11 +60,11 @@ open class SearchCycleForVertexInGraphSolver<V>(val graph: Graph<V>) { // non-ne
             if (vertexColor[tempVertex] == Color.White) {
                 val result = dfs(tempVertex, currVertex)
 
-                if (result != -1) {
+                if (result >= 0) {
                     cycleVertices.add(currVertex)
 
                     vertexColor[currVertex] = Color.Black
-                    return if (result == currVertex) -1 else result
+                    return if (result == currVertex) -2 else result
                 }
             }
 
