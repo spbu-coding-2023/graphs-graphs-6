@@ -32,10 +32,10 @@ class CircularPlacementStrategy : RepresentationStrategy {
             }
     }
 
-    override fun <V> highlight(vertices: Collection<VertexViewModel<V>>) {
+    override fun <V> highlight(vertices: Collection<VertexViewModel<V>>, color: Color) {
         vertices
             .onEach {
-                it.color = Color.Green
+                it.color = color
             }
     }
 

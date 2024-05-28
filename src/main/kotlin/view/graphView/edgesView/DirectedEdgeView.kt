@@ -33,7 +33,7 @@ fun <V> directedEdgeView(
         )
         val arrowSize = 35f
         val angle = atan2(destination.y - source.y, destination.x - source.x)
-        val rotationAngle = PI / 6
+        val rotationAngle = PI / 12
         val arrowSourceX = destination.x - arrowSize * cos(angle + rotationAngle)
         val arrowSourceY = destination.y - arrowSize * sin(angle + rotationAngle)
         val arrowDestinationX = destination.x - arrowSize * cos(angle - rotationAngle)

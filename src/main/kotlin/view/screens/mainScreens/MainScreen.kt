@@ -52,7 +52,7 @@ fun <V> mainScreen(viewModel: MainScreenViewModel<V>, isDirected: Boolean) {
                 when (item) {
                     "Select key vertices" -> viewModel.selectKeyVertices()
                     "Select communities" -> {}
-                    "Select strongly connected components" -> {}
+                    "Select strongly connected components" -> viewModel.selectStronglyConnectedComponents()
                     "Find bridges" -> {}
                     "Find cycles for a vertex" -> {}
                 }

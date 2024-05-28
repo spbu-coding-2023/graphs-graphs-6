@@ -42,12 +42,15 @@ fun app() {
                     addVertex("F")
                     addVertex("G")
 
-                    addEdge(0, 1)
+                    addEdge(1, 0)
                     addEdge(0, 2)
                     addEdge(0, 3)
-                    addEdge(0, 4)
-                    addEdge(0, 5)
-                    addEdge(0, 6)
+                    addEdge(3, 2)
+                    addEdge(2, 1)
+                    addEdge(1, 4)
+                    addEdge(4, 5)
+                    addEdge(5, 6)
+                    addEdge(6, 4)
                 }
                 mainScreen(MainScreenViewModel(sampleGraph, CircularPlacementStrategy()), false)
             } else if (graphChooseVM.isDirected && !graphChooseVM.isWeighted) {
@@ -60,12 +63,15 @@ fun app() {
                     addVertex("F")
                     addVertex("G")
 
-                    addEdge(0, 1)
+                    addEdge(1, 0)
                     addEdge(0, 2)
                     addEdge(0, 3)
-                    addEdge(0, 4)
-                    addEdge(0, 5)
-                    addEdge(0, 6)
+                    addEdge(3, 2)
+                    addEdge(2, 1)
+                    addEdge(1, 4)
+                    addEdge(4, 5)
+                    addEdge(5, 6)
+                    addEdge(6, 4)
                 }
                 mainScreen(MainScreenViewModel(sampleGraph, CircularPlacementStrategy()), true)
             } else if (!graphChooseVM.isDirected) {
@@ -78,21 +84,30 @@ fun app() {
                     addVertex("F")
                     addVertex("G")
 
-                    addEdge(0, 1)
+                    addEdge(1, 0)
                     addEdge(0, 2)
                     addEdge(0, 3)
-                    addEdge(0, 4)
-                    addEdge(0, 5)
-                    addEdge(0, 6)
+                    addEdge(3, 2)
+                    addEdge(2, 1)
+                    addEdge(1, 4)
+                    addEdge(4, 5)
+                    addEdge(5, 6)
+                    addEdge(6, 4)
 
                     changeEdgeWeight(0, 1)
-                    changeEdgeWeight(1, -2)
+                    changeEdgeWeight(1, 1)
                     changeEdgeWeight(2, 3)
                     changeEdgeWeight(3, -4)
                     changeEdgeWeight(4, 5)
                     changeEdgeWeight(5, -6)
+                    changeEdgeWeight(6, 12)
+                    changeEdgeWeight(7, 4)
+                    changeEdgeWeight(8, 5)
                 }
-                mainScreenWeightedGraph(MainScreenViewModelWeightedGraph(sampleGraph, CircularPlacementStrategy()), false)
+                mainScreenWeightedGraph(
+                    MainScreenViewModelWeightedGraph(sampleGraph, CircularPlacementStrategy()),
+                    false
+                )
             } else {
                 val sampleGraph = WeightedDirectedGraph<String>().apply {
                     addVertex("A")
@@ -103,21 +118,30 @@ fun app() {
                     addVertex("F")
                     addVertex("G")
 
-                    addEdge(0, 1)
+                    addEdge(1, 0)
                     addEdge(0, 2)
                     addEdge(0, 3)
-                    addEdge(0, 4)
-                    addEdge(0, 5)
-                    addEdge(0, 6)
+                    addEdge(3, 2)
+                    addEdge(2, 1)
+                    addEdge(1, 4)
+                    addEdge(4, 5)
+                    addEdge(5, 6)
+                    addEdge(6, 4)
 
                     changeEdgeWeight(0, 1)
-                    changeEdgeWeight(1, -2)
+                    changeEdgeWeight(1, 1)
                     changeEdgeWeight(2, 3)
                     changeEdgeWeight(3, -4)
                     changeEdgeWeight(4, 5)
                     changeEdgeWeight(5, -6)
+                    changeEdgeWeight(6, 12)
+                    changeEdgeWeight(7, 4)
+                    changeEdgeWeight(8, 5)
                 }
-                mainScreenWeightedGraph(MainScreenViewModelWeightedGraph(sampleGraph, CircularPlacementStrategy()), true)
+                mainScreenWeightedGraph(
+                    MainScreenViewModelWeightedGraph(sampleGraph, CircularPlacementStrategy()),
+                    true
+                )
             }
         }
     }

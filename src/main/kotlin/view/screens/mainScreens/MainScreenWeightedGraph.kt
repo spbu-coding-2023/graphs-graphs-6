@@ -53,8 +53,8 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
             val items =
                 mutableListOf("Select key vertices", "Select communities", "Find cycles for a vertex", "Find shortest path (Dijkstra)")
             if (isDirected) items.apply {
-                items.add("Select strongly connected components")
                 items.add("Find shortest path (Ford-Bellman)")
+                items.add("Select strongly connected components")
             }
             else items.apply {
                 items.add("Find bridges")
@@ -64,7 +64,7 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
                 when (item) {
                     "Select key vertices" -> viewModel.selectKeyVertices()
                     "Select communities" -> {}
-                    "Select strongly connected components" -> {}
+                    "Select strongly connected components" -> viewModel.selectStronglyConnectedComponents()
                     "Find bridges" -> {}
                     "Find cycles for a vertex" -> {}
                     "Build a minimal spanning tree" -> {}
