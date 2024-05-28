@@ -1,8 +1,8 @@
 package graphsTests
 
-import graphs.edges.WeightedEdge
-import graphs.graphs.WeightedDirectedGraph
-import graphs.vertex.Vertex
+import model.graphs.edges.WeightedEdge
+import model.graphs.graphs.WeightedDirectedGraph
+import model.graphs.vertex.Vertex
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach

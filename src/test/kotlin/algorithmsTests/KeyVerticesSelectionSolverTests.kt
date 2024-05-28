@@ -1,9 +1,9 @@
-package algorithmsTests.keyVerticesSelectionTests
+package algorithmsTests
 
-import algorithms.keyVerticesSelection.KeyVerticesSelectionSolver
-import graphs.edges.Edge
-import graphs.graphs.Graph
-import graphs.vertex.Vertex
+import model.algorithms.keyVerticesSelection.KeyVerticesSelectionSolver
+import model.graphs.edges.Edge
+import model.graphs.graphs.Graph
+import model.graphs.vertex.Vertex
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName

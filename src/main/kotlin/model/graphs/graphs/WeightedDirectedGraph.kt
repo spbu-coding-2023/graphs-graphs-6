@@ -1,8 +1,8 @@
-package graphs.graphs
+package model.graphs.graphs
 
-import graphs.edges.Edge
+import model.graphs.edges.WeightedEdge
 
-class DirectedGraph<V> : Graph<V>() {
+class WeightedDirectedGraph<V> : WeightedGraph<V>() {
     override fun toAdjacencyMap(): Map<Int, MutableSet<Int>> {
         val graphMap: MutableMap<Int, MutableSet<Int>> = mutableMapOf()
         for (edge in edges.values) {
@@ -19,6 +19,6 @@ class DirectedGraph<V> : Graph<V>() {
     }
 
     // edges are equivalent when both source and destination are the same
-    override fun checkEdgesEquivalent(firstEdge: Edge, secondEdge: Edge) =
+    override fun checkEdgesEquivalent(firstEdge: WeightedEdge, secondEdge: WeightedEdge) =
         (firstEdge.verticesNumbers == secondEdge.verticesNumbers)
 }
