@@ -33,14 +33,14 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
                 Checkbox(checked = viewModel.showEdgesLabels.value, onCheckedChange = {
                     viewModel.showEdgesLabels.value = it
                 })
-                Text("Show edges labels", fontSize = 28.sp, modifier = Modifier.padding(4.dp))
+                Text("Show edges weights", fontSize = 28.sp, modifier = Modifier.padding(4.dp))
             }
             Button(
                 onClick = viewModel::resetGraphView,
                 enabled = true
             ) {
                 Text(
-                    text = "Reset default settings"
+                    text = "Reset"
                 )
             }
         }

@@ -34,7 +34,7 @@ fun <V> mainScreen(viewModel: MainScreenViewModel<V>, isDirected: Boolean) {
                 enabled = true
             ) {
                 Text(
-                    text = "Reset default settings"
+                    text = "Reset"
                 )
             }
         }
