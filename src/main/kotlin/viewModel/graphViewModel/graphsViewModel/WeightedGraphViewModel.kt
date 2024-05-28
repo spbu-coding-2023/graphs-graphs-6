@@ -14,7 +14,7 @@ class WeightedGraphViewModel<V>(
     showEdgesLabels: State<Boolean>
 ) : AbstractGraphViewModel<V, WeightedEdge>(graph) {
 
-    private val verticesMap = graph.vertices.values.associateWith { v ->
+    val verticesMap = graph.vertices.values.associateWith { v ->
         VertexViewModel(0.dp, 0.dp, Color.Gray, v, showVerticesLabels)
     }
 

@@ -5,7 +5,6 @@ import androidx.compose.ui.unit.dp
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
-import kotlin.random.Random
 
 class CircularPlacementStrategy : RepresentationStrategy {
     override fun <V> place(width: Double, height: Double, vertices: Collection<VertexViewModel<V>>) {
@@ -36,7 +35,7 @@ class CircularPlacementStrategy : RepresentationStrategy {
     override fun <V> highlight(vertices: Collection<VertexViewModel<V>>) {
         vertices
             .onEach {
-                it.color = if (Random.nextBoolean()) Color.Green else Color.Blue
+                it.color = Color.Green
             }
     }
 

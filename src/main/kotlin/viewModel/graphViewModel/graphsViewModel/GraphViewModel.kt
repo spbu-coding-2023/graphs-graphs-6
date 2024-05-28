@@ -12,7 +12,7 @@ class GraphViewModel<V>(
     override val graph: Graph<V>,
     showVerticesLabels: State<Boolean>
 ) : AbstractGraphViewModel<V, Edge>(graph) {
-    private val verticesMap = graph.vertices.values.associateWith { v ->
+    val verticesMap = graph.vertices.values.associateWith { v ->
         VertexViewModel(0.dp, 0.dp, Color.Gray, v, showVerticesLabels)
     }
 
