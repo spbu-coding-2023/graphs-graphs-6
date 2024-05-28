@@ -21,7 +21,7 @@ class GraphViewModel<V>(
             ?: throw IllegalStateException("VertexView for ${graph.vertices[e.verticesNumbers.first]} not found")
         val snd = verticesMap[graph.vertices[e.verticesNumbers.second]]
             ?: throw IllegalStateException("VertexView for ${graph.vertices[e.verticesNumbers.first]} not found")
-        EdgeViewModel(fst, snd)
+        EdgeViewModel(fst, snd, Color.Black)
     }
 
     val vertices: Collection<VertexViewModel<V>>

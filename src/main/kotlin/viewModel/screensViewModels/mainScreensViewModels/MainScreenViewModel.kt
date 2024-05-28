@@ -22,6 +22,7 @@ class MainScreenViewModel<V>(val graph: Graph<V>, representationStrategy: Repres
     fun resetGraphView() {
         representationStrategy.place(800.0, 600.0, graphViewModel.vertices)
         graphViewModel.vertices.forEach { v -> v.color = Color.Gray }
+        graphViewModel.edges.forEach { e -> e.color = Color.Black }
     }
 
     private fun setVerticesColor(verticesToHighlight: List<Int>) {
@@ -31,7 +32,7 @@ class MainScreenViewModel<V>(val graph: Graph<V>, representationStrategy: Repres
             val vertexViewModel = graphViewModel.verticesMap[vertex] ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
             verticesList.add(vertexViewModel)
         }
-        representationStrategy.highlight(verticesList, Color.Green)
+        representationStrategy.highlightVertices(verticesList, Color.Green)
     }
 
     fun selectKeyVertices() {
@@ -60,7 +61,7 @@ class MainScreenViewModel<V>(val graph: Graph<V>, representationStrategy: Repres
             val vertexViewModel = graphViewModel.verticesMap[vertex] ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
             val componentNum = componentsMap[vertexNum] ?: throw IllegalArgumentException("No component found for this vertex")
             val color = componentsColors[componentNum] ?: throw IllegalArgumentException("No color found for this component")
-            representationStrategy.highlight(listOf(vertexViewModel), color)
+            representationStrategy.highlightVertices(listOf(vertexViewModel), color)
         }
     }
 }

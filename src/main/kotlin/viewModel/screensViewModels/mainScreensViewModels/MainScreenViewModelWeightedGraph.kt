@@ -2,14 +2,18 @@ package viewModel.screensViewModels.mainScreensViewModels
 
 import androidx.compose.ui.graphics.Color
 import model.algorithms.keyVerticesSelection.KeyVerticesSelectionSolver
+import model.algorithms.pathSearch.djikstra.DjikstraAlgorithm
+import model.algorithms.pathSearch.fordBellman.FordBellmanAlgorithm
 import model.algorithms.stronglyConnectedComponentsSelection.StronglyConnectedComponentsSelectionSolver
 import model.graphs.edges.WeightedEdge
 import model.graphs.graphs.DirectedGraph
 import model.graphs.graphs.Graph
 import model.graphs.graphs.WeightedDirectedGraph
 import model.graphs.graphs.WeightedGraph
+import model.graphs.vertex.Vertex
 import viewModel.graphViewModel.RepresentationStrategy
 import viewModel.graphViewModel.VertexViewModel
+import viewModel.graphViewModel.edgesViewModel.EdgeViewModel
 import viewModel.graphViewModel.graphsViewModel.WeightedGraphViewModel
 import kotlin.random.Random
 
@@ -24,6 +28,7 @@ class MainScreenViewModelWeightedGraph<V>(val graph: WeightedGraph<V>, represent
     fun resetGraphView() {
         representationStrategy.place(800.0, 600.0, graphViewModel.vertices)
         graphViewModel.vertices.forEach { v -> v.color = Color.Gray }
+        graphViewModel.edges.forEach { e -> e.color = Color.Black }
     }
 
     private fun setVerticesColor(verticesToHighlight: List<Int>) {
@@ -34,7 +39,7 @@ class MainScreenViewModelWeightedGraph<V>(val graph: WeightedGraph<V>, represent
                 ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
             verticesList.add(vertexViewModel)
         }
-        representationStrategy.highlight(verticesList, Color.Green)
+        representationStrategy.highlightVertices(verticesList, Color.Green)
     }
 
     fun selectKeyVertices() {
@@ -64,7 +69,8 @@ class MainScreenViewModelWeightedGraph<V>(val graph: WeightedGraph<V>, represent
         for (componentNum in componentsMap.values) {
             if (componentNum !in componentsColors.keys) {
                 var randomTriple = Triple(0, 0, 0)
-                while (randomTriple in usedTriples) randomTriple = Triple(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
+                while (randomTriple in usedTriples) randomTriple =
+                    Triple(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
                 usedTriples.add(randomTriple)
                 val color = Color(randomTriple.first, randomTriple.second, randomTriple.third, 255)
                 componentsColors[componentNum] = color
@@ -72,10 +78,48 @@ class MainScreenViewModelWeightedGraph<V>(val graph: WeightedGraph<V>, represent
         }
         for (vertexNum in componentsMap.keys) {
             val vertex = graph.vertices[vertexNum] ?: throw IllegalArgumentException("No such vertex in a graph model")
-            val vertexViewModel = graphViewModel.verticesMap[vertex] ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
-            val componentNum = componentsMap[vertexNum] ?: throw IllegalArgumentException("No component found for this vertex")
-            val color = componentsColors[componentNum] ?: throw IllegalArgumentException("No color found for this component")
-            representationStrategy.highlight(listOf(vertexViewModel), color)
+            val vertexViewModel = graphViewModel.verticesMap[vertex]
+                ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
+            val componentNum =
+                componentsMap[vertexNum] ?: throw IllegalArgumentException("No component found for this vertex")
+            val color =
+                componentsColors[componentNum] ?: throw IllegalArgumentException("No color found for this component")
+            representationStrategy.highlightVertices(listOf(vertexViewModel), color)
         }
+    }
+
+    fun findShortestPath(isFordBellman: Boolean, startVertexNum: Int, finishVertexNum: Int) {
+        var previousVertex: Vertex<V>?
+        val vertexList: List<Vertex<V>>
+        if (isFordBellman) {
+            if (graph !is WeightedDirectedGraph) throw IllegalArgumentException("Only directed graphs with negative weights are supported")
+            val solver = FordBellmanAlgorithm(graph)
+            val result = solver.findPath(startVertexNum, finishVertexNum)
+                ?: throw IllegalArgumentException("No path between those vertices")
+            previousVertex = result.sourceVertex
+            vertexList = result.vertexList
+        } else {
+            val solver = DjikstraAlgorithm(graph)
+            val result = solver.findNearestPath(startVertexNum, finishVertexNum)
+            previousVertex = result.sourceVertex
+            vertexList = result.vertexList
+        }
+        val toHighlightVertices: MutableList<VertexViewModel<V>> = mutableListOf()
+        val toHighlightEdges: MutableList<EdgeViewModel<V>> = mutableListOf()
+        for (vertex in vertexList) {
+            val vertexViewModel = graphViewModel.verticesMap[vertex]
+                ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
+            toHighlightVertices.add(vertexViewModel)
+            for (edge in graph.edges.values) {
+                if ((isFordBellman && (Pair(graph.vertices[edge.verticesNumbers.first], graph.vertices[edge.verticesNumbers.second]) == Pair(previousVertex, vertex))) || (!isFordBellman && ((Pair(graph.vertices[edge.verticesNumbers.first], graph.vertices[edge.verticesNumbers.second]) == Pair(previousVertex, vertex)) || Pair(graph.vertices[edge.verticesNumbers.first], graph.vertices[edge.verticesNumbers.second]) == Pair(vertex, previousVertex)))) {
+                    val edgeViewModel =
+                        graphViewModel.edgesMap[edge] ?: throw IllegalArgumentException("No ViewModel for such edge")
+                    toHighlightEdges.add(edgeViewModel)
+                }
+            }
+            previousVertex = vertex
+        }
+        representationStrategy.highlightVertices(toHighlightVertices, Color.Green)
+        representationStrategy.highlightEdges(toHighlightEdges, Color.Red)
     }
 }

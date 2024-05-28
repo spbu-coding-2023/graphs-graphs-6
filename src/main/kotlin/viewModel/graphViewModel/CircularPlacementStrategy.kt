@@ -2,6 +2,7 @@ package viewModel.graphViewModel
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import viewModel.graphViewModel.edgesViewModel.EdgeViewModel
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
@@ -32,8 +33,15 @@ class CircularPlacementStrategy : RepresentationStrategy {
             }
     }
 
-    override fun <V> highlight(vertices: Collection<VertexViewModel<V>>, color: Color) {
+    override fun <V> highlightVertices(vertices: Collection<VertexViewModel<V>>, color: Color) {
         vertices
+            .onEach {
+                it.color = color
+            }
+    }
+
+    override fun <V> highlightEdges(edges: Collection<EdgeViewModel<V>>, color: Color) {
+        edges
             .onEach {
                 it.color = color
             }

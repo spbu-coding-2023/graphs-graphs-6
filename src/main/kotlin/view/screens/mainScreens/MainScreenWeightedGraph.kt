@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -50,13 +52,22 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
                 )
             }
             var expanded by remember { mutableStateOf(false) }
+            var dialogOpen by remember { mutableStateOf(false) }
+            var pathFindStartVertex by remember { mutableStateOf(0) }
+            var pathFindFinishVertex by remember { mutableStateOf(0) }
+            var isFordBellman by remember { mutableStateOf(false) }
             val items =
-                mutableListOf("Select key vertices", "Select communities", "Find cycles for a vertex", "Find shortest path (Dijkstra)")
+                mutableListOf(
+                    "Select key vertices",
+                    "Select communities",
+                    "Find cycles for a vertex"
+                )
             if (isDirected) items.apply {
                 items.add("Find shortest path (Ford-Bellman)")
                 items.add("Select strongly connected components")
             }
             else items.apply {
+                items.add("Find shortest path (Dijkstra)")
                 items.add("Find bridges")
                 items.add("Build a minimal spanning tree")
             }
@@ -68,9 +79,59 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
                     "Find bridges" -> {}
                     "Find cycles for a vertex" -> {}
                     "Build a minimal spanning tree" -> {}
-                    "Find shortest path (Dijkstra)" -> {}
-                    "Find shortest path (Ford-Bellman)" -> {}
+                    "Find shortest path (Dijkstra)" -> {
+                        isFordBellman = false
+                        dialogOpen = true
+                    }
+
+                    "Find shortest path (Ford-Bellman)" -> {
+                        isFordBellman = true
+                        dialogOpen = true
+                    }
                 }
+            }
+            if (dialogOpen) {
+                AlertDialog(
+                    onDismissRequest = {
+                        dialogOpen = false
+                    },
+                    title = { Text("Enter source and destination vertices, please") },
+                    text = {
+                        Column {
+                            OutlinedTextField(
+                                value = pathFindStartVertex.toString(),
+                                onValueChange = { pathFindStartVertex = it.toIntOrNull() ?: 0 },
+                                label = { Text("Source") }
+                            )
+                            OutlinedTextField(
+                                value = pathFindFinishVertex.toString(),
+                                onValueChange = { pathFindFinishVertex = it.toIntOrNull() ?: 0 },
+                                label = { Text("Destination") }
+                            )
+                        }
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                dialogOpen = false
+                                viewModel.findShortestPath(
+                                    isFordBellman,
+                                    pathFindStartVertex - 1,
+                                    pathFindFinishVertex - 1
+                                )
+                            }
+                        ) {
+                            Text("OK")
+                        }
+                    },
+                    dismissButton = {
+                        Button(
+                            onClick = { dialogOpen = false }
+                        ) {
+                            Text("Cancel")
+                        }
+                    }
+                )
             }
             DropdownMenu(
                 expanded = expanded,
