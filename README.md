@@ -1,6 +1,6 @@
-# Graph analysis app
+# Graphs visualizer app
 
-This app provides the ability to store graphs and analyze them.
+This app is a graph visualizer with ability to analyze the graph.
 
 ## Table of contents
 
@@ -15,19 +15,9 @@ This app provides the ability to store graphs and analyze them.
 
 ## Functionality <a name="functionality"></a>
 
-Using our app, you can fully manipulate the graph: add new vertices and delete existent, connect nodes with the edges
-and delete these edges too.
-In our GUI, graph is drawn with usage of graph plane layout algorithm.
-You can store graphs in 3 formats:
-
-* .json file.
-* SQLite database.
-* Neo4j database.
-
 We provide the opportunity to solve these problems with our app:
 
 * Selecting key vertices of the graph.
-* Searching for communities in the graph.
 * Selecting strongly connected components (directed graph).
 * Searching for bridges (undirected graph).
 * Search for cycles for a given vertex.
@@ -90,9 +80,7 @@ src
 │  │  │   │  ├── EdgeView.kt // edge view
 │  │  │   │
 │  │  │   ├── graphsView
-│  │  │   │  ├── DirectedGraphView.kt // directed graph view
 │  │  │   │  ├── GraphView.kt // graph view
-│  │  │   │  ├── WeightedDirectedGraphView.kt // weighted directed graph view
 │  │  │   │  ├── WeightedGraphView.kt // weighted graph view
 │  │  │   │
 │  │  │   ├── VertexView.kt // vertex view
@@ -111,7 +99,6 @@ src
 │  │  │   │  ├── WeightedEdgeViewModel.kt // edge viewmodel class
 │  │  │   │
 │  │  │   ├── graphsViewModel
-│  │  │   │  ├── AbstractGraphViewModel.kt // abstract graph viewmodel class
 │  │  │   │  ├── GraphViewModel.kt //  graph viewmodel class
 │  │  │   │  ├── WeightedGraphViewModel.kt //  weighted graph viewmodel class
 │  │  │   │
@@ -121,7 +108,6 @@ src
 │  │  │
 │  │  ├── screensViewModels
 │  │  │   ├── mainScreensViewModels
-│  │  │   │  ├── AbstractMainScreenViewModel.kt // abstract main screen viewmodel class
 │  │  │   │  ├── MainScreenViewModel.kt // main screen viewmodel class
 │  │  │   │  ├── MainScreenViewModelWeightedGraph // main screen with weighted graph viewmodel class
 │  │  │   │
@@ -153,7 +139,7 @@ src
 
 ## How to use <a name="howtouse"></a>
 
-See our wiki page. (TODO)
+See [DOCS.md](./DOCS.md)
 
 ## Technologies used in the library <a name="technologies"></a>
 
@@ -165,17 +151,17 @@ See our wiki page. (TODO)
 
 ## Our team and responsibility areas <a name="team"></a>
 
-* Vyacheslav Kochergin - .json graph storage, key vertices searching, strongly connected components selection, finding
-  the shortest path with negative weights,
+* Vyacheslav Kochergin - key vertices selection, strongly connected components selection, finding the shortest path with
+  negative weights, GUI,
   documentation. [GitHub](https://github.com/VyacheslavIurevich), [Contact](https://t.me/se4life).
-* Vadim Marchenko - Neo4j graph storage, graph plane layout, searching for bridges, finding the shortest path without
-  negative weights, CI. [GitHub](https://github.com/elbananium), [Contact](https://t.me/elbananum).
-* Dmitri Kuznetsov - SQLite graph storage, searching for communities in the graph, searching for cycles, minimal
-  spanning tree construction, GUI manager. [GitHub](https://github.com/f1i3g3), [Contact](https://t.me/f1i3g3).
+* Vadim Marchenko - .json graph storage, searching for bridges, finding the shortest path without negative weights,
+  CI. [GitHub](https://github.com/elbananium), [Contact](https://t.me/elbananum).
+* Dmitri Kuznetsov - searching cycles for given vertex, minimal spanning tree
+  construction. [GitHub](https://github.com/f1i3g3), [Contact](https://t.me/f1i3g3).
 
 ## Project status <a name="status"></a>
 
-In development.
+Ready to be checked (as much as we managed to do in time).
 
 ## Contributing <a name="contributing"></a>
 
