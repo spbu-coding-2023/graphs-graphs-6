@@ -16,6 +16,7 @@ import model.graphs.vertex.Vertex
 import viewModel.graphViewModel.RepresentationStrategy
 import viewModel.graphViewModel.VertexViewModel
 import viewModel.graphViewModel.edgesViewModel.EdgeViewModel
+import viewModel.graphViewModel.edgesViewModel.WeightedEdgeViewModel
 import viewModel.graphViewModel.graphsViewModel.WeightedGraphViewModel
 import kotlin.random.Random
 
@@ -150,8 +151,8 @@ class MainScreenViewModelWeightedGraph<V>(val graph: WeightedGraph<V>, represent
     fun buildMST() {
         val solver = KruskalAlgorithmSolver(graph)
         val mst = solver.doKruskalAlgorithm()
-        val toHighlightNotIncludedEdges: MutableList<EdgeViewModel<V>> = mutableListOf()
-        val toHighlightIncludedEdges: MutableList<EdgeViewModel<V>> = mutableListOf()
+        val toHighlightNotIncludedEdges: MutableList<WeightedEdgeViewModel<V>> = mutableListOf()
+        val toHighlightIncludedEdges: MutableList<WeightedEdgeViewModel<V>> = mutableListOf()
         for (edge in graph.edges.values) {
             val edgeViewModel =
                 graphViewModel.edgesMap[edge] ?: throw IllegalArgumentException("No ViewModel for such edge")
