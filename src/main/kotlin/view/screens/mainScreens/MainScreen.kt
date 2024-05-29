@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -44,6 +46,8 @@ fun <V> mainScreen(viewModel: MainScreenViewModel<V>, isDirected: Boolean) {
                 )
             }
             var expanded by remember { mutableStateOf(false) }
+            var dialogOpen by remember { mutableStateOf(false) }
+            var cycleVertex by remember { mutableStateOf(0) }
             val items =
                 mutableListOf("Select key vertices", "Select communities", "Find cycles for a vertex")
             if (isDirected) items.add("Select strongly connected components")
@@ -54,8 +58,44 @@ fun <V> mainScreen(viewModel: MainScreenViewModel<V>, isDirected: Boolean) {
                     "Select communities" -> {}
                     "Select strongly connected components" -> viewModel.selectStronglyConnectedComponents()
                     "Find bridges" -> viewModel.findBridges()
-                    "Find cycles for a vertex" -> {}
+                    "Find cycles for a vertex" -> {
+                        dialogOpen = true
+                    }
                 }
+            }
+            if (dialogOpen) {
+                AlertDialog(
+                    onDismissRequest = {
+                        dialogOpen = false
+                    },
+                    title = { Text("Enter the vertex, please") },
+                    text = {
+                        Column {
+                            OutlinedTextField(
+                                value = cycleVertex.toString(),
+                                onValueChange = { cycleVertex = it.toIntOrNull() ?: 0 },
+                                label = { Text("Vertex") }
+                            )
+                        }
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                dialogOpen = false
+                                viewModel.findCycle(cycleVertex)
+                            }
+                        ) {
+                            Text("OK")
+                        }
+                    },
+                    dismissButton = {
+                        Button(
+                            onClick = { dialogOpen = false }
+                        ) {
+                            Text("Cancel")
+                        }
+                    }
+                )
             }
             DropdownMenu(
                 expanded = expanded,

@@ -87,4 +87,8 @@ class MainScreenViewModel<V>(val graph: Graph<V>, representationStrategy: Repres
         }
         representationStrategy.highlightEdges(toHighlightEdges, Color.Red)
     }
+
+    fun findCycle(vertexNum: Int) {
+        TODO()
+    }
 }
