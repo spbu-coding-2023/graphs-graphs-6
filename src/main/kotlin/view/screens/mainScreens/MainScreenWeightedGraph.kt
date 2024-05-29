@@ -1,4 +1,3 @@
-
 package view.screens.mainScreens
 
 import androidx.compose.foundation.layout.Arrangement
@@ -54,23 +53,25 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
             }
             var expanded by remember { mutableStateOf(false) }
             var dialogOpen by remember { mutableStateOf(false) }
+            var dialogSecondOpen by remember { mutableStateOf(false) }
             var pathFindStartVertex by remember { mutableStateOf(0) }
             var pathFindFinishVertex by remember { mutableStateOf(0) }
+            var cycleVertex by remember { mutableStateOf(0) }
             var isFordBellman by remember { mutableStateOf(false) }
             val items =
                 mutableListOf(
-                    "Select key vertices",
+                    "Find cycles for a vertex",
                     "Select communities",
-                    "Find cycles for a vertex"
+                    "Select key vertices"
                 )
             if (isDirected) items.apply {
-                items.add("Find shortest path (Ford-Bellman)")
+                items.add(1, "Find shortest path (Ford-Bellman)")
                 items.add("Select strongly connected components")
             }
             else items.apply {
-                items.add("Find shortest path (Dijkstra)")
-                items.add("Find bridges")
-                items.add("Build a minimal spanning tree")
+                items.add(1, "Find shortest path (Dijkstra)")
+                items.add(0, "Find bridges")
+                items.add(0, "Build a minimal spanning tree")
             }
             fun onItemSelected(item: String) {
                 when (item) {
@@ -78,7 +79,10 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
                     "Select communities" -> {}
                     "Select strongly connected components" -> viewModel.selectStronglyConnectedComponents()
                     "Find bridges" -> viewModel.findBridges()
-                    "Find cycles for a vertex" -> {}
+                    "Find cycles for a vertex" -> {
+                        dialogSecondOpen = true
+                    }
+
                     "Build a minimal spanning tree" -> viewModel.buildMST()
                     "Find shortest path (Dijkstra)" -> {
                         isFordBellman = false
@@ -128,6 +132,40 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
                     dismissButton = {
                         Button(
                             onClick = { dialogOpen = false }
+                        ) {
+                            Text("Cancel")
+                        }
+                    }
+                )
+            }
+            if (dialogSecondOpen) {
+                AlertDialog(
+                    onDismissRequest = {
+                        dialogOpen = false
+                    },
+                    title = { Text("Enter the vertex, please") },
+                    text = {
+                        Column {
+                            OutlinedTextField(
+                                value = cycleVertex.toString(),
+                                onValueChange = { cycleVertex = it.toIntOrNull() ?: 0 },
+                                label = { Text("Vertex") }
+                            )
+                        }
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                dialogSecondOpen = false
+                                viewModel.findCycle(cycleVertex)
+                            }
+                        ) {
+                            Text("OK")
+                        }
+                    },
+                    dismissButton = {
+                        Button(
+                            onClick = { dialogSecondOpen = false }
                         ) {
                             Text("Cancel")
                         }
