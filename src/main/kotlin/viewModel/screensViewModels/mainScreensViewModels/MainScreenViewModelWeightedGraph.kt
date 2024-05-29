@@ -165,39 +165,52 @@ class MainScreenViewModelWeightedGraph<V>(val graph: WeightedGraph<V>, represent
         representationStrategy.highlightEdges(toHighlightNotIncludedEdges, Color.White)
     }
 
-    fun findCycle(vertexNum: Int) {
+    fun findCycle(cycleVertexNum: Int) {
         val sameGraphNoWeights = if (graph is WeightedDirectedGraph<V>) DirectedGraph() else Graph<V>()
         for (vertex in graph.vertices.values) sameGraphNoWeights.addVertex(vertex.value)
         for (edge in graph.edges.values) sameGraphNoWeights.addEdge(
             edge.verticesNumbers.first,
             edge.verticesNumbers.second
         )
-        val solver = if (sameGraphNoWeights is DirectedGraph) SearchCycleForVertexInDirectedGraphSolver(sameGraphNoWeights) else SearchCycleForVertexInGraphSolver(sameGraphNoWeights)
-        val resultHasCycle = solver.searchCycleForVertex(vertexNum - 1)
+        val solver =
+            if (sameGraphNoWeights is DirectedGraph<V>) SearchCycleForVertexInDirectedGraphSolver(sameGraphNoWeights) else SearchCycleForVertexInGraphSolver(
+                sameGraphNoWeights
+            )
+        val vertexNum = cycleVertexNum - 1
+        val resultHasCycle = solver.searchCycleForVertex(vertexNum)
         val resultList = solver.getCycle()
         val toHighlightVertices: MutableList<VertexViewModel<V>> = mutableListOf()
+        val toHighlightEdges: MutableList<EdgeViewModel<V>> = mutableListOf()
+        var previousVertexNum = vertexNum
         if (resultHasCycle) {
-            val toHighlightEdges: MutableList<EdgeViewModel<V>> = mutableListOf()
-            for (edgeNum in resultList) {
-                val edge = graph.edges[edgeNum] ?: throw IllegalArgumentException("No such edge in the graph model")
-                val edgeViewModel =
-                    graphViewModel.edgesMap[edge] ?: throw IllegalArgumentException("No ViewModel for such edge")
-                toHighlightEdges.add(edgeViewModel)
-                val firstVertexNum = edge.verticesNumbers.first
-                val firstVertex = graph.vertices[firstVertexNum] ?: throw IllegalArgumentException("No such vertex in the graph model")
-                val firstVertexViewModel = graphViewModel.verticesMap[firstVertex]
+            for (currVertexNum in resultList) {
+                val vertex =
+                    graph.vertices[currVertexNum] ?: throw IllegalArgumentException("No such vertex in graph model")
+                val vertexViewModel = graphViewModel.verticesMap[vertex]
                     ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
-                toHighlightVertices.add(firstVertexViewModel)
-                val secondVertexNum = edge.verticesNumbers.second
-                val secondVertex = graph.vertices[secondVertexNum] ?: throw IllegalArgumentException("No such vertex in the graph model")
-                val secondVertexViewModel = graphViewModel.verticesMap[secondVertex]
-                    ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
-                toHighlightVertices.add(secondVertexViewModel)
+                toHighlightVertices.add(vertexViewModel)
+                for (edge in graph.edges.values) {
+                    if (sameGraphNoWeights is DirectedGraph) {
+                        if (edge.verticesNumbers == Pair(previousVertexNum, currVertexNum)) {
+                            val edgeViewModel = graphViewModel.edgesMap[edge]
+                                ?: throw IllegalArgumentException("No such edge in a graph ViewModel")
+                            toHighlightEdges.add(edgeViewModel)
+                        }
+                    } else {
+                        if ((edge.verticesNumbers == Pair(previousVertexNum, currVertexNum)) || (edge.verticesNumbers == Pair(currVertexNum, previousVertexNum))) {
+                            val edgeViewModel = graphViewModel.edgesMap[edge]
+                                ?: throw IllegalArgumentException("No such edge in a graph ViewModel")
+                            toHighlightEdges.add(edgeViewModel)
+                        }
+                    }
+                }
+                previousVertexNum = currVertexNum
             }
             representationStrategy.highlightVertices(toHighlightVertices, Color.Green)
             representationStrategy.highlightEdges(toHighlightEdges, Color.Red)
         } else {
-            val vertex = graph.vertices[vertexNum] ?: throw IllegalArgumentException("No such vertex in the graph model")
+            val vertex =
+                graph.vertices[vertexNum] ?: throw IllegalArgumentException("No such vertex in graph model")
             val vertexViewModel = graphViewModel.verticesMap[vertex]
                 ?: throw IllegalArgumentException("No such vertex in a graph ViewModel")
             toHighlightVertices.add(vertexViewModel)
