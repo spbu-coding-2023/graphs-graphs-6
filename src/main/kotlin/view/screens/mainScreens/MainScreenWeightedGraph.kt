@@ -21,7 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import view.graphView.graphsView.weightedDirectedGraphView
 import view.graphView.graphsView.weightedGraphView
 import viewModel.screensViewModels.mainScreensViewModels.MainScreenViewModelWeightedGraph
 
@@ -61,7 +60,6 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
             val items =
                 mutableListOf(
                     "Find cycles for a vertex",
-                    "Select communities",
                     "Select key vertices"
                 )
             if (isDirected) items.apply {
@@ -76,7 +74,6 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
             fun onItemSelected(item: String) {
                 when (item) {
                     "Select key vertices" -> viewModel.selectKeyVertices()
-                    "Select communities" -> {}
                     "Select strongly connected components" -> viewModel.selectStronglyConnectedComponents()
                     "Find bridges" -> viewModel.findBridges()
                     "Find cycles for a vertex" -> {
@@ -198,8 +195,7 @@ fun <V> mainScreenWeightedGraph(viewModel: MainScreenViewModelWeightedGraph<V>, 
         Surface(
             modifier = Modifier.weight(1f)
         ) {
-            if (isDirected) weightedDirectedGraphView(viewModel.graphViewModel)
-            else weightedGraphView(viewModel.graphViewModel)
+            weightedGraphView(viewModel.graphViewModel)
         }
     }
 }

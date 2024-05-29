@@ -21,7 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import view.graphView.graphsView.directedGraphView
 import view.graphView.graphsView.graphView
 import viewModel.screensViewModels.mainScreensViewModels.MainScreenViewModel
 
@@ -49,13 +48,12 @@ fun <V> mainScreen(viewModel: MainScreenViewModel<V>, isDirected: Boolean) {
             var dialogOpen by remember { mutableStateOf(false) }
             var cycleVertex by remember { mutableStateOf(0) }
             val items =
-                mutableListOf("Find cycles for a vertex", "Select communities", "Select key vertices")
+                mutableListOf("Find cycles for a vertex", "Select key vertices")
             if (isDirected) items.add("Select strongly connected components")
             else items.add(0, "Find bridges")
             fun onItemSelected(item: String) {
                 when (item) {
                     "Select key vertices" -> viewModel.selectKeyVertices()
-                    "Select communities" -> {}
                     "Select strongly connected components" -> viewModel.selectStronglyConnectedComponents()
                     "Find bridges" -> viewModel.findBridges()
                     "Find cycles for a vertex" -> {
@@ -123,8 +121,7 @@ fun <V> mainScreen(viewModel: MainScreenViewModel<V>, isDirected: Boolean) {
         Surface(
             modifier = Modifier.weight(1f)
         ) {
-            if (isDirected) directedGraphView(viewModel.graphViewModel)
-            else graphView(viewModel.graphViewModel)
+            graphView(viewModel.graphViewModel)
         }
     }
 }

@@ -1,5 +1,6 @@
 package viewModel.screensViewModels.mainScreensViewModels
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import model.algorithms.bridgeFinder.BridgeFinder
 import model.algorithms.keyVerticesSelection.KeyVerticesSelectionSolver
@@ -9,7 +10,6 @@ import model.algorithms.pathSearch.fordBellman.FordBellmanAlgorithm
 import model.algorithms.searchCycle.SearchCycleForVertexInDirectedGraphSolver
 import model.algorithms.searchCycle.SearchCycleForVertexInGraphSolver
 import model.algorithms.stronglyConnectedComponentsSelection.StronglyConnectedComponentsSelectionSolver
-import model.graphs.edges.WeightedEdge
 import model.graphs.graphs.DirectedGraph
 import model.graphs.graphs.Graph
 import model.graphs.graphs.WeightedDirectedGraph
@@ -22,9 +22,13 @@ import viewModel.graphViewModel.edgesViewModel.WeightedEdgeViewModel
 import viewModel.graphViewModel.graphsViewModel.WeightedGraphViewModel
 import kotlin.random.Random
 
-class MainScreenViewModelWeightedGraph<V>(val graph: WeightedGraph<V>, representationStrategy: RepresentationStrategy) :
-    AbstractMainScreenViewModel<V, WeightedEdge>(representationStrategy) {
-    override val graphViewModel = WeightedGraphViewModel(graph, showVerticesLabels, showEdgesLabels)
+class MainScreenViewModelWeightedGraph<V>(
+    val graph: WeightedGraph<V>,
+    private val representationStrategy: RepresentationStrategy
+) {
+    val showVerticesLabels = mutableStateOf(false)
+    val showEdgesLabels = mutableStateOf(false)
+    val graphViewModel = WeightedGraphViewModel(graph, showVerticesLabels, showEdgesLabels)
 
     init {
         representationStrategy.place(800.0, 600.0, graphViewModel.vertices)
@@ -196,7 +200,8 @@ class MainScreenViewModelWeightedGraph<V>(val graph: WeightedGraph<V>, represent
                             toHighlightEdges.add(edgeViewModel)
                         }
                     } else {
-                        if ((edge.verticesNumbers == Pair(previousVertexNum, currVertexNum)) || (edge.verticesNumbers == Pair(currVertexNum, previousVertexNum))) {
+                        if ((edge.verticesNumbers == Pair(previousVertexNum, currVertexNum)) || (edge.verticesNumbers == Pair(currVertexNum, previousVertexNum))
+                        ) {
                             val edgeViewModel = graphViewModel.edgesMap[edge]
                                 ?: throw IllegalArgumentException("No such edge in a graph ViewModel")
                             toHighlightEdges.add(edgeViewModel)

@@ -13,7 +13,6 @@ open class KeyVerticesSelectionSolver<V>(protected open val graph: Graph<V>) {
     private val threshold = 0.00001
     private val stochasticMatrix: MutableMap<Int, MutableMap<Int, Double>> = mutableMapOf()
     private val visited: MutableMap<Int, Boolean> = mutableMapOf()
-    private val stationaryDistribution: MutableMap<Int, Double> = mutableMapOf()
 
     private fun dfsStochasticMatrix(vertexNum: Int) {
         if (visited[vertexNum] == true) return

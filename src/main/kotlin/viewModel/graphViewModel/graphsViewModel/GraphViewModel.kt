@@ -3,15 +3,14 @@ package viewModel.graphViewModel.graphsViewModel
 import androidx.compose.runtime.State
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import model.graphs.edges.Edge
 import model.graphs.graphs.Graph
 import viewModel.graphViewModel.VertexViewModel
 import viewModel.graphViewModel.edgesViewModel.EdgeViewModel
 
 class GraphViewModel<V>(
-    override val graph: Graph<V>,
+    val graph: Graph<V>,
     showVerticesLabels: State<Boolean>
-) : AbstractGraphViewModel<V, Edge>(graph) {
+) {
     val verticesMap = graph.vertices.values.associateWith { v ->
         VertexViewModel(0.dp, 0.dp, Color.Gray, v, showVerticesLabels)
     }
