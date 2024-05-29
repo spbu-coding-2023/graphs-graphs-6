@@ -4,7 +4,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     kotlin("jvm") version "1.9.23"
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
-    kotlin("plugin.serialization") version "2.0.0"
+    kotlin("plugin.serialization") version "1.9.23"
     id("org.jetbrains.compose")
     jacoco
 }
