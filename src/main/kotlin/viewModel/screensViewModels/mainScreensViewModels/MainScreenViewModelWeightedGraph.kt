@@ -100,7 +100,6 @@ class MainScreenViewModelWeightedGraph<V>(val graph: WeightedGraph<V>, represent
             if (graph !is WeightedDirectedGraph) throw IllegalArgumentException("Only directed graphs with negative weights are supported")
             val solver = FordBellmanAlgorithm(graph)
             val result = solver.findPath(startVertexNum, finishVertexNum)
-                ?: throw IllegalArgumentException("No path between those vertices")
             previousVertex = result.sourceVertex
             vertexList = result.vertexList
         } else {
