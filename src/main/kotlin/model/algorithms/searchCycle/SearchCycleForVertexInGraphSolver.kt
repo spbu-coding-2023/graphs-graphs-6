@@ -2,7 +2,7 @@ package model.algorithms.searchCycle
 
 import model.graphs.graphs.Graph
 
-open class SearchCycleGraphSolver<V>(val graph: Graph<V>) { // non-negative numbers of vertices
+open class SearchCycleForVertexInGraphSolver<V>(val graph: Graph<V>) { // non-negative numbers of vertices
     protected enum class Color {
         White,
         Gray,
@@ -13,20 +13,15 @@ open class SearchCycleGraphSolver<V>(val graph: Graph<V>) { // non-negative numb
     private val cycleVertices = mutableListOf<Int>()
     private val vertexColor = mutableMapOf<Int, Color>()
 
-    fun searchCycle(): Boolean { // only first cycle found
-        initializeUsageList()
-
-        for (vertex in verticesAdjacencyList.keys) {
-            if (vertexColor[vertex] != Color.Black) {
-                dfs(vertex)
-
-                if (cycleVertices.size != 0) {
-                    return true
-                }
-            }
+    fun searchCycleForVertex(vertex: Int): Boolean { // only first cycle found
+        if (verticesAdjacencyList.isEmpty()) {
+            return false
         }
 
-        return cycleVertices.size != 0
+        initializeUsageList()
+
+        val result = dfs(vertex)
+        return result == -2
     }
 
     fun getCycle(): List<Int> {
@@ -36,7 +31,7 @@ open class SearchCycleGraphSolver<V>(val graph: Graph<V>) { // non-negative numb
             answer.reverse()
         }
 
-        return answer.toList() // correct answer (reverse), first vertex included twice
+        return answer.toList() // correct answer (reverse), first vertex included twice; if algorithm's result is false, empty list returned
     }
 
     private fun initializeUsageList() {
@@ -65,11 +60,11 @@ open class SearchCycleGraphSolver<V>(val graph: Graph<V>) { // non-negative numb
             if (vertexColor[tempVertex] == Color.White) {
                 val result = dfs(tempVertex, currVertex)
 
-                if (result != -1) {
+                if (result >= 0) {
                     cycleVertices.add(currVertex)
 
                     vertexColor[currVertex] = Color.Black
-                    return if (result == currVertex) -1 else result
+                    return if (result == currVertex) -2 else result
                 }
             }
 
