@@ -1,8 +1,8 @@
 package graphsTests
 
-import graphs.edges.Edge
-import graphs.graphs.AbstractGraph
-import graphs.vertex.Vertex
+import model.graphs.edges.Edge
+import model.graphs.graphs.AbstractGraph
+import model.graphs.vertex.Vertex
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
@@ -203,5 +203,16 @@ abstract class AbstractGraphTests<E : Edge, G : AbstractGraph<Int, E>> {
         graph.edges = mutableMapOf(Pair(0, createEdge(Pair(0, 1))))
         graph.lastEdgeNumber = 1
         assertNull(graph.getEdgeVerticesNumbers(1))
+    }
+
+    @Test
+    @DisplayName("transform graph to its adjacency map")
+    open fun transformGraphToMap() {
+        graph.vertices = mutableMapOf(Pair(0, Vertex(1)), Pair(1, Vertex(1)), Pair(2, Vertex(2)))
+        graph.lastVertexNumber = 3
+        graph.edges = mutableMapOf(Pair(0, createEdge(Pair(0, 1))), Pair(1, createEdge(Pair(1, 2))), Pair(2, createEdge(Pair(0, 2))))
+        graph.lastEdgeNumber = 3
+        val expectedMap = mapOf(Pair(0, setOf(1, 2)), Pair(1, setOf(0, 2)), Pair(2, setOf(0, 1)))
+        assertEquals(expectedMap, graph.toAdjacencyMap())
     }
 }
