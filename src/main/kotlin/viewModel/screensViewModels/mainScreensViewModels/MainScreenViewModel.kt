@@ -1,12 +1,12 @@
 package viewModel.screensViewModels.mainScreensViewModels
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import model.algorithms.bridgeFinder.BridgeFinder
 import model.algorithms.keyVerticesSelection.KeyVerticesSelectionSolver
 import model.algorithms.searchCycle.SearchCycleForVertexInDirectedGraphSolver
 import model.algorithms.searchCycle.SearchCycleForVertexInGraphSolver
 import model.algorithms.stronglyConnectedComponentsSelection.StronglyConnectedComponentsSelectionSolver
-import model.graphs.edges.Edge
 import model.graphs.graphs.DirectedGraph
 import model.graphs.graphs.Graph
 import viewModel.graphViewModel.RepresentationStrategy
@@ -15,9 +15,10 @@ import viewModel.graphViewModel.edgesViewModel.EdgeViewModel
 import viewModel.graphViewModel.graphsViewModel.GraphViewModel
 import kotlin.random.Random
 
-class MainScreenViewModel<V>(val graph: Graph<V>, representationStrategy: RepresentationStrategy) :
-    AbstractMainScreenViewModel<V, Edge>(representationStrategy) {
-    override val graphViewModel = GraphViewModel(graph, showVerticesLabels)
+class MainScreenViewModel<V>(val graph: Graph<V>, private val representationStrategy: RepresentationStrategy) {
+
+    val showVerticesLabels = mutableStateOf(false)
+    val graphViewModel = GraphViewModel(graph, showVerticesLabels)
 
     init {
         representationStrategy.place(800.0, 600.0, graphViewModel.vertices)
