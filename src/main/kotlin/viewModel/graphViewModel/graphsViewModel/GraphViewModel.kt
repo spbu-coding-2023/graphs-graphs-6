@@ -9,7 +9,7 @@ import viewModel.graphViewModel.VertexViewModel
 import viewModel.graphViewModel.edgesViewModel.EdgeViewModel
 
 class GraphViewModel<V>(
-    override val graph: Graph<V>,
+    public override val graph: Graph<V>,
     showVerticesLabels: State<Boolean>
 ) : AbstractGraphViewModel<V, Edge>(graph) {
     val verticesMap = graph.vertices.values.associateWith { v ->

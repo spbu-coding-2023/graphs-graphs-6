@@ -9,7 +9,7 @@ import viewModel.graphViewModel.VertexViewModel
 import viewModel.graphViewModel.edgesViewModel.WeightedEdgeViewModel
 
 class WeightedGraphViewModel<V>(
-    override val graph: WeightedGraph<V>,
+    public override val graph: WeightedGraph<V>,
     showVerticesLabels: State<Boolean>,
     showEdgesLabels: State<Boolean>
 ) : AbstractGraphViewModel<V, WeightedEdge>(graph) {

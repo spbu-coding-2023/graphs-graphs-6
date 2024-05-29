@@ -21,7 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import view.graphView.graphsView.directedGraphView
 import view.graphView.graphsView.graphView
 import viewModel.screensViewModels.mainScreensViewModels.MainScreenViewModel
 
@@ -123,8 +122,7 @@ fun <V> mainScreen(viewModel: MainScreenViewModel<V>, isDirected: Boolean) {
         Surface(
             modifier = Modifier.weight(1f)
         ) {
-            if (isDirected) directedGraphView(viewModel.graphViewModel)
-            else graphView(viewModel.graphViewModel)
+            graphView(viewModel.graphViewModel)
         }
     }
 }
