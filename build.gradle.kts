@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+    implementation(files("libs/gephi-toolkit-0.10.0-all.jar"))
     testImplementation(kotlin("test"))
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation(compose.desktop.currentOs)

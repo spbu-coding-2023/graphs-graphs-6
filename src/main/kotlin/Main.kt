@@ -14,25 +14,34 @@ import model.graphs.graphs.WeightedGraph
 import view.screens.graphChooseScreen
 import view.screens.mainScreens.mainScreen
 import view.screens.mainScreens.mainScreenWeightedGraph
-import viewModel.graphViewModel.CircularPlacementStrategy
+import view.screens.placementStrategyScreen
 import viewModel.screensViewModels.GraphChooseViewModel
+import viewModel.screensViewModels.PlacementStrategyViewModel
 import viewModel.screensViewModels.mainScreensViewModels.MainScreenViewModel
 import viewModel.screensViewModels.mainScreensViewModels.MainScreenViewModelWeightedGraph
 
 var closeFirstWindow: MutableState<Boolean> = mutableStateOf(false)
+var closePlacementStrategyWindow: MutableState<Boolean> = mutableStateOf(false)
 val graphChooseVM = GraphChooseViewModel<String>()
+val placementStrategyVM = PlacementStrategyViewModel()
 
 @Composable
 @Preview
 fun app() {
     MaterialTheme {
         closeFirstWindow = remember { mutableStateOf(false) }
+        closePlacementStrategyWindow = remember { mutableStateOf(false) }
+        if (!closePlacementStrategyWindow.value) {
+            placementStrategyScreen(placementStrategyVM) {
+                closePlacementStrategyWindow.value = true
+            }
+        }
         if (!closeFirstWindow.value) {
             graphChooseScreen(graphChooseVM) {
                 closeFirstWindow.value = true
             }
         }
-        if (closeFirstWindow.value) {
+        if (closeFirstWindow.value && closePlacementStrategyWindow.value) {
             if (!graphChooseVM.isDirected && !graphChooseVM.isWeighted) {
                 val sampleGraph = Graph<String>().apply {
                     addVertex("A")
@@ -42,7 +51,6 @@ fun app() {
                     addVertex("E")
                     addVertex("F")
                     addVertex("G")
-
                     addEdge(1, 0)
                     addEdge(0, 2)
                     addEdge(0, 3)
@@ -53,7 +61,7 @@ fun app() {
                     addEdge(5, 6)
                     addEdge(6, 4)
                 }
-                mainScreen(MainScreenViewModel(sampleGraph, CircularPlacementStrategy()), false)
+                mainScreen(MainScreenViewModel(sampleGraph, placementStrategyVM.placementStrategy), false)
             } else if (graphChooseVM.isDirected && !graphChooseVM.isWeighted) {
                 val sampleGraph = DirectedGraph<String>().apply {
                     addVertex("A")
@@ -74,7 +82,7 @@ fun app() {
                     addEdge(5, 6)
                     addEdge(6, 4)
                 }
-                mainScreen(MainScreenViewModel(sampleGraph, CircularPlacementStrategy()), true)
+                mainScreen(MainScreenViewModel(sampleGraph, placementStrategyVM.placementStrategy), true)
             } else if (!graphChooseVM.isDirected) {
                 val sampleGraph = WeightedGraph<String>().apply {
                     addVertex("A")
@@ -106,7 +114,7 @@ fun app() {
                     changeEdgeWeight(8, 5)
                 }
                 mainScreenWeightedGraph(
-                    MainScreenViewModelWeightedGraph(sampleGraph, CircularPlacementStrategy()),
+                    MainScreenViewModelWeightedGraph(sampleGraph, placementStrategyVM.placementStrategy),
                     false
                 )
             } else {
@@ -140,7 +148,7 @@ fun app() {
                     changeEdgeWeight(8, 5)
                 }
                 mainScreenWeightedGraph(
-                    MainScreenViewModelWeightedGraph(sampleGraph, CircularPlacementStrategy()),
+                    MainScreenViewModelWeightedGraph(sampleGraph, placementStrategyVM.placementStrategy),
                     true
                 )
             }

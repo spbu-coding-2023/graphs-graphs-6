@@ -31,11 +31,11 @@ class MainScreenViewModelWeightedGraph<V>(
     val graphViewModel = WeightedGraphViewModel(graph, showVerticesLabels, showEdgesLabels)
 
     init {
-        representationStrategy.place(800.0, 600.0, graphViewModel.vertices)
+        representationStrategy.place(800.0, 600.0, graph, graphViewModel.vertices)
     }
 
     fun resetGraphView() {
-        representationStrategy.place(800.0, 600.0, graphViewModel.vertices)
+        representationStrategy.place(800.0, 600.0, graph, graphViewModel.vertices)
         graphViewModel.vertices.forEach { v -> v.color = Color.Gray }
         graphViewModel.edges.forEach { e -> e.color = Color.Black }
     }
