@@ -2,13 +2,15 @@ package viewModel.graphViewModel
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import model.graphs.edges.Edge
+import model.graphs.graphs.AbstractGraph
 import viewModel.graphViewModel.edgesViewModel.EdgeViewModel
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 
 class CircularPlacementStrategy : RepresentationStrategy {
-    override fun <V> place(width: Double, height: Double, vertices: Collection<VertexViewModel<V>>) {
+    override fun <V, E : Edge> place(width: Double, height: Double, graph : AbstractGraph<V, E>, vertices: Collection<VertexViewModel<V>>) {
         if (vertices.isEmpty()) {
             println("CircularPlacementStrategy.place: there is nothing to place 👐🏻")
             return

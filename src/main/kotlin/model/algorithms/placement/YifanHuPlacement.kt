@@ -8,28 +8,24 @@ import org.gephi.layout.plugin.force.StepDisplacement
 import org.gephi.layout.plugin.force.yifanHu.YifanHuLayout
 import kotlin.random.Random
 
-open class YifanHuPlacement<V,E : Edge>(val graph: AbstractGraph<V, E>)
-{
-    fun getPlacement(width : Int, height : Int): Map<V, Pair<Float, Float>>
-    {
+open class YifanHuPlacement<V, E : Edge>(val graph: AbstractGraph<V, E>) {
+    fun getPlacement(width: Int, height: Int): Map<V, Pair<Float, Float>> {
         val random = Random(1L)
 
-
-        val graphModel = GraphModel.Factory.newInstance();
-        val graphType = graphModel.undirectedGraph;
+        val graphModel = GraphModel.Factory.newInstance()
+        val graphType = graphModel.undirectedGraph
 
         val nodes = mutableMapOf<V, Node>()
         for (vertex in graph.vertices.values) {
             val node: Node = graphModel.factory().newNode(vertex.value.toString())
-            node.setX(random.nextFloat()*width)
-            node.setY(random.nextFloat()*height)
+            node.setX(random.nextFloat() * width)
+            node.setY(random.nextFloat() * height)
             nodes[vertex.value] = node
 
             graphType.addNode(node)
         }
 
         for (edge in graph.edges.values) {
-
             val firstVertex = graph.getVertexValue(edge.verticesNumbers.first)
             val secondVertex = graph.getVertexValue(edge.verticesNumbers.second)
             val e: org.gephi.graph.api.Edge = graphModel.factory().newEdge(
@@ -40,8 +36,8 @@ open class YifanHuPlacement<V,E : Edge>(val graph: AbstractGraph<V, E>)
             )
             graphType.addEdge(e)
         }
-        val layout = YifanHuLayout(null,StepDisplacement(1f));
-        layout.setGraphModel(graphModel);
+        val layout = YifanHuLayout(null, StepDisplacement(1f))
+        layout.setGraphModel(graphModel)
         layout.initAlgo()
         layout.resetPropertiesValues()
         layout.optimalDistance = 100f
@@ -65,7 +61,5 @@ open class YifanHuPlacement<V,E : Edge>(val graph: AbstractGraph<V, E>)
         }
 
         return placement
-
-
     }
 }
