@@ -1,0 +1,36 @@
+name: Main
+on:
+  pull_request:
+    branches: [ main,development ]
+
+  push:
+    branches: [ main,development ]
+jobs:
+  Lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v4
+      - name: Start lint
+        run: ./gradlew ktlintCheck
+
+  Tests:
+    name: Tests and Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v4
+      - name: Run test
+        id : runtest
+        run: ./gradlew test
+        continue-on-error: true
+      - name : Display tests results
+        run: python3 ./scripts/test-result-printer.py --dir ./build/test-results/test --all-failures
+      - name: Run jacoco coverage report
+        run: ./gradlew jacocoTestReport
+      - name: Display info about coverage
+        run: python3 ./scripts/csv-reports-printer.py --input ./build/reports/jacoco/test/jacocoTestReport.csv
+      - name : Failure at least one test fails
+        if: steps.runtest.outcome != 'success'
+        run: exit 1
