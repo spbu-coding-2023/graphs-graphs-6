@@ -31,7 +31,7 @@ class MainScreenViewModelWeightedGraph<V>(
     val graphViewModel = WeightedGraphViewModel(graph, showVerticesLabels, showEdgesLabels)
 
     init {
-        representationStrategy.place(800.0, 600.0, graph,graphViewModel.vertices)
+        representationStrategy.place(800.0, 600.0, graph, graphViewModel.vertices)
     }
 
     fun resetGraphView() {

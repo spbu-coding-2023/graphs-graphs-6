@@ -40,7 +40,7 @@ open class YifanHuPlacement<V, E : Edge>(val graph: AbstractGraph<V, E>) {
         layout.setGraphModel(graphModel)
         layout.initAlgo()
         layout.resetPropertiesValues()
-        layout.optimalDistance = 100f
+        layout.optimalDistance = 300f
         layout.relativeStrength = 0.2f
         layout.initialStep = 20.0f
         layout.stepRatio = 0.95f
@@ -55,9 +55,7 @@ open class YifanHuPlacement<V, E : Edge>(val graph: AbstractGraph<V, E>) {
         val placement = mutableMapOf<V, Pair<Float, Float>>()
         for (vertex in graph.vertices.values) {
             val n = graphType.getNode(vertex.value.toString())
-            val x = width * n.x()
-            val y = height * n.y()
-            placement[vertex.value] = Pair(x, y)
+            placement[vertex.value] = Pair(n.x(), n.y())
         }
 
         return placement

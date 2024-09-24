@@ -10,7 +10,7 @@ import kotlin.math.min
 import kotlin.math.sin
 
 class CircularPlacementStrategy : RepresentationStrategy {
-    override fun <V, E : Edge> place(width: Double, height: Double, graph : AbstractGraph<V, E>, vertices: Collection<VertexViewModel<V>>) {
+    override fun <V, E : Edge> place(width: Double, height: Double, graph: AbstractGraph<V, E>, vertices: Collection<VertexViewModel<V>>) {
         if (vertices.isEmpty()) {
             println("CircularPlacementStrategy.place: there is nothing to place 👐🏻")
             return
